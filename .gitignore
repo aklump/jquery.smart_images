@@ -1,0 +1,5 @@
+demo/jquery.smart_images.min.js
+.web_package/*
+!.web_package/config
+!.web_package/hooks
+tests

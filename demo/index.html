@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo of Smart Images</title>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="lib/jquery.smart_images/dist/lib/breakpointx/dist/BreakpointX.js"></script>
+  <script src="lib/jquery.smart_images/dist/jquery.smart_images.js"></script>
+  <!--<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+  <style type="text/css">
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <script>
+    (function ($) {
+      $('document').ready(function () {
+        $('.always').smartImages({
+          downsize      : 'always',
+          onInit        : function () {
+            console.log('onInit called');
+          },
+          onBeforeChange: function (bp, src) {
+            console.log('onBeforeChange called', bp, src);
+          },
+          onAfterChange : function (bp, src) {
+            console.log('onAfterChange called', bp, src);
+          }
+        });
+        $('.never').smartImages({
+          downsize: 'never'
+        });
+        $('.loaded').smartImages({
+          downsize: 'loaded'
+        });
+      });
+    })(jQuery);
+  </script>
+</head>
+<body>
+<div class="container">
+  <h1><!--$web_package_name--><!--/$web_package_name--> Demo
+    <small>Smart Images</small>
+  </h1>
+  <p class="lead"><!--$web_package_description--><!--/$web_package_description--></p>
+
+  <!-- Key features of Smart Images -->
+  <div class="well">
+    <ul>
+      <li>Window width based image loading for responsive applications.</li>
+    </ul>
+  </div>
+
+  <p>
+    <a href="http://www.intheloftstudios.com/packages/jquery/jquery.smart_images" type="button" class="btn btn-primary"
+       data-web-package="homepage">Homepage</a>
+    <a href="https://github.com/aklump/jquery.smart_images" type="button"
+       class="btn btn-primary btn-success">Download</a>
+  </p>
+
+  <h2>Demo Instructions</h2>
+  <ol>
+    <li>View the image source in the Example below in the inspector</li>
+    <li>Now change your browser window width</li>
+    <li>Observe how the <code>img.src</code> changes and pulls in the image appropriate to the window width.</li>
+  </ol>
+  <hr/>
+
+  <h2>Markup</h2>
+
+  <ul>
+    <li>You MUST have at least two image paths defined based on a media query regarding a screen width.</li>
+    <li>You MUST have only one <code>min-width</code> declaration and it needs to be 1px greater than your highest
+      <code>max-width</code> declaration.
+    </li>
+    <li>You MAY have as many <code>max-width</code> declarations as you want breakpoints.</li>
+    <li>Each <code>max-width</code> tag MUST define a path to an image the SHOULD be the same width as the <code>max-width</code>
+      value.
+    <li>The single <code>min-width</code> tag MUST define a path to the largest image you want to load and it SHOULD be
+      larger than the <code>min-width</code> value, e.g., if <code>min-width=769</code> the image may be 1080px wide.
+    </li>
+    </li>
+  </ul>
+
+  <pre>
+    &lt;div class="smart-image">
+      &lt;span data-si-srcset="images/768/water-buffalo.jpg" data-si-media="(max-width: 768px)">&lt;/span>
+      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="(min-width: 769px)">&lt;/span>
+      &lt;img/>
+    &lt;/div>
+</pre>
+  <h2>Javascript</h2>
+  <pre>
+    $('document').ready(function () {
+      $('.smart-image').smartImages();
+    });
+  </pre>
+
+  <h2>Configuration</h2>
+  <p>See the source for configuration options, including alternative selector classes, and data attributes.</p>
+
+  <h2>Example</h2>
+  <p>The image below does not use the above markup, but a variant with more breakpoints. Inspect source to learn
+    more. It is split into three slices to demonstrate the various downsize settings (always, never, loaded), in that
+    order.</p>
+  <div class="always">
+    <span data-si-srcset="images/320/1-always.jpg" data-si-media="(max-width: 320px)"></span>
+    <span data-si-srcset="images/480/1-always.jpg" data-si-media="(max-width: 480px)"></span>
+    <span data-si-srcset="images/768/1-always.jpg" data-si-media="(max-width: 768px)"></span>
+    <span data-si-srcset="images/1080/1-always.jpg" data-si-media="(min-width: 769px)"></span>
+    <img/>
+  </div>
+  <div class="never">
+    <span data-si-srcset="images/320/2-never.jpg" data-si-media="(max-width: 320px)"></span>
+    <span data-si-srcset="images/480/2-never.jpg" data-si-media="(max-width: 480px)"></span>
+    <span data-si-srcset="images/768/2-never.jpg" data-si-media="(max-width: 768px)"></span>
+    <span data-si-srcset="images/1080/2-never.jpg" data-si-media="(min-width: 769px)"></span>
+    <img/>
+  </div>
+  <div class="loaded">
+    <span data-si-srcset="images/320/3-loaded.jpg" data-si-media="(max-width: 320px)"></span>
+    <span data-si-srcset="images/480/3-loaded.jpg" data-si-media="(max-width: 480px)"></span>
+    <span data-si-srcset="images/768/3-loaded.jpg" data-si-media="(max-width: 768px)"></span>
+    <span data-si-srcset="images/1080/3-loaded.jpg" data-si-media="(min-width: 769px)"></span>
+    <img/>
+  </div>
+
+
+  <hr/>
+  <p class="text-muted"><strong>jquery.smart_images</strong> is brought to you by <a
+      href="http://www.intheloftstudios.com">In the Loft Studios</a></p>
+</div>
+
+<!-- Form me icon/link -->
+<a href="https://github.com/aklump/jquery.smart_images"><img style="position: absolute; top: 0; right: 0; border: 0;"
+                                                             src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+                                                             alt="Fork me on GitHub"></a>
+</body>
+</html>
