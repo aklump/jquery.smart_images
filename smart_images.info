@@ -1,5 +1,5 @@
 name = Smart Images
 description = Window width-based image loading for responsive applications.
-version = 0.1.2
+version = 0.1.3
 author = Aaron Klump <sourcecode@intheloftstudios.com>
 homepage = http://www.intheloftstudios.com/packages/js/smart_images
