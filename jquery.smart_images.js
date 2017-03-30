@@ -7,7 +7,7 @@
  * Copyright 2017, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Thu Mar 30 08:35:47 PDT 2017
+ * Date: Thu Mar 30 10:47:01 PDT 2017
  *
  * @link http://www.intheloftstudios.com/packages/js/breakpointX
  */
@@ -92,7 +92,7 @@
       // instead 2017-03-29T21:19, aklump.
       var data  = $(this).attr('data-' + p + s.dataMediaSuffix),
           src   = $(this).attr('data-' + p + s.dataSrcSuffix),
-          parts = data.match(/\((.+)-width:\s*(\d+)px\)/);
+          parts = data.match(/(.+)-width:\s*(\d+)px/);
 
       self.srcMap[data] = src;
 

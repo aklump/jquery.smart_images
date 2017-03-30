@@ -69,24 +69,24 @@
     more. It is split into three slices to demonstrate the various downsize settings (always, never, loaded), in that
     order.  You will notice a different if you load the page wide and then downsize VS. load the page narrow and then upsize.</p>
   <div class="always">
-    <span data-si-srcset="images/319/1-always.jpg" data-si-media="(max-width: 319px)"></span>
-    <span data-si-srcset="images/479/1-always.jpg" data-si-media="(max-width: 479px)"></span>
-    <span data-si-srcset="images/767/1-always.jpg" data-si-media="(max-width: 767px)"></span>
-    <span data-si-srcset="images/1080/1-always.jpg" data-si-media="(min-width: 768px)"></span>
+    <span data-si-srcset="images/319/1-always.jpg" data-si-media="max-width: 319px"></span>
+    <span data-si-srcset="images/479/1-always.jpg" data-si-media="max-width: 479px"></span>
+    <span data-si-srcset="images/767/1-always.jpg" data-si-media="max-width: 767px"></span>
+    <span data-si-srcset="images/1080/1-always.jpg" data-si-media="min-width: 768px"></span>
     <img/>
   </div>
   <div class="never">
-    <span data-si-srcset="images/319/2-never.jpg" data-si-media="(max-width: 319px)"></span>
-    <span data-si-srcset="images/479/2-never.jpg" data-si-media="(max-width: 479px)"></span>
-    <span data-si-srcset="images/767/2-never.jpg" data-si-media="(max-width: 767px)"></span>
-    <span data-si-srcset="images/1080/2-never.jpg" data-si-media="(min-width: 768px)"></span>
+    <span data-si-srcset="images/319/2-never.jpg" data-si-media="max-width: 319px"></span>
+    <span data-si-srcset="images/479/2-never.jpg" data-si-media="max-width: 479px"></span>
+    <span data-si-srcset="images/767/2-never.jpg" data-si-media="max-width: 767px"></span>
+    <span data-si-srcset="images/1080/2-never.jpg" data-si-media="min-width: 768px"></span>
     <img/>
   </div>
   <div class="loaded">
-    <span data-si-srcset="images/319/3-loaded.jpg" data-si-media="(max-width: 319px)"></span>
-    <span data-si-srcset="images/479/3-loaded.jpg" data-si-media="(max-width: 479px)"></span>
-    <span data-si-srcset="images/767/3-loaded.jpg" data-si-media="(max-width: 767px)"></span>
-    <span data-si-srcset="images/1080/3-loaded.jpg" data-si-media="(min-width: 768px)"></span>
+    <span data-si-srcset="images/319/3-loaded.jpg" data-si-media="max-width: 319px"></span>
+    <span data-si-srcset="images/479/3-loaded.jpg" data-si-media="max-width: 479px"></span>
+    <span data-si-srcset="images/767/3-loaded.jpg" data-si-media="max-width: 767px"></span>
+    <span data-si-srcset="images/1080/3-loaded.jpg" data-si-media="min-width: 768px"></span>
     <img/>
   </div>
 
@@ -140,8 +140,8 @@
 
   <pre>
     &lt;div class="smart-image">
-      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="(max-width: 767px)">&lt;/span>
-      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="(min-width: 768px)">&lt;/span>
+      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="max-width: 767px">&lt;/span>
+      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="min-width: 768px">&lt;/span>
       &lt;img/>
     &lt;/div>
 </pre>
@@ -152,10 +152,10 @@
 
   <pre>
     &lt;div class="smart-image">
-      &lt;span data-si-srcset="images/319/water-buffalo.jpg" data-si-media="(max-width: 319px)">&lt;/span>
-      &lt;span data-si-srcset="images/479/water-buffalo.jpg" data-si-media="(max-width: 479px)">&lt;/span>
-      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="(max-width: 767px)">&lt;/span>
-      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="(min-width: 768px)">&lt;/span>
+      &lt;span data-si-srcset="images/319/water-buffalo.jpg" data-si-media="max-width: 319px">&lt;/span>
+      &lt;span data-si-srcset="images/479/water-buffalo.jpg" data-si-media="max-width: 479px">&lt;/span>
+      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="max-width: 767px">&lt;/span>
+      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="min-width: 768px">&lt;/span>
       &lt;img/>
     &lt;/div>
 </pre>
@@ -171,9 +171,6 @@
 
   <h2>Configuration</h2>
   <p>See the source for configuration options, including alternative selector classes, and data attributes.</p>
-
-
-
 
   <hr/>
   <p class="text-muted"><strong>jquery.smart_images</strong> is brought to you by <a
