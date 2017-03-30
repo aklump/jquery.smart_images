@@ -7,13 +7,13 @@
  * Copyright 2017, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Wed Mar 29 18:25:24 PDT 2017
- * 
+ * Date: Wed Mar 29 21:21:43 PDT 2017
+ *
  * @link http://www.intheloftstudios.com/packages/js/breakpointX
  */
 /**
  * @link
- * Instantiate this plugin thus:
+  * Instantiate this plugin thus:
  * @code
  *   $('.smart-image').smartImages({
  *     "cssPrefix"         : 'smart-images-'
@@ -85,8 +85,10 @@
 
     // Acquire the data value from all span elements
     $el.find('[data-' + s.dataPrefix + s.dataMediaSuffix + ']').each(function () {
-      var data  = $(this).data(p + s.dataMediaSuffix),
-          src   = $(this).data(p + s.dataSrcSuffix),
+      // We cannot use .data here, because the attr may have been altered AFTER data was read in.  So we must use .attr
+      // instead 2017-03-29T21:19, aklump.
+      var data  = $(this).attr('data-' + p + s.dataMediaSuffix),
+          src   = $(this).attr('data-' + p + s.dataSrcSuffix),
           parts = data.match(/\((.+)-width:\s*(\d+)px\)/);
 
       self.srcMap[data] = src;
