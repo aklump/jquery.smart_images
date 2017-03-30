@@ -7,7 +7,7 @@
  * Copyright 2017, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Wed Mar 29 12:34:10 PDT 2017
+ * Date: Wed Mar 29 18:22:38 PDT 2017
  * 
  * @link http://www.intheloftstudios.com/packages/js/breakpointX
  */
@@ -92,8 +92,7 @@
       self.srcMap[data] = src;
 
       if (parts.length !== 3) {
-        throw "";
-        // throw "Invalid value: '" + data + "' in data attribute";
+        throw "Bad value: '" + data + "' in media.";
       }
       var pixels = 1 * parts[2] + 1;
       if (parts[1] === 'min') {
@@ -115,15 +114,13 @@
 
     // Assert we only have one min
     if (min.length !== 1) {
-      // throw "You must declare one and only one data-media=\"(min-width:...";
-      throw '';
+      throw "You MUST declare only one min-width.";
     }
     max.sort(sort);
 
     // Assert that the min is 1 pixel greater than the last min.
     if (min[0][1] - 1 !== max[max.length - 1][1]) {
-      throw '';
-      // throw "The min-width declaration must be exactly one pixel greater than your highest max-width declaration";
+      throw "The min-width MUST be one pixel > than highest max-width.";
     }
 
     // Now create the breakpoint object

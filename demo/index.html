@@ -3,8 +3,8 @@
 <head>
   <title>Demo of Smart Images</title>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="lib/jquery.smart_images/dist/lib/breakpointx/dist/BreakpointX.js"></script>
-  <script src="lib/jquery.smart_images/dist/jquery.smart_images.js"></script>
+  <script src="lib/jquery_smart_images/dist/lib/breakpointx/dist/BreakpointX.js"></script>
+  <script src="lib/jquery_smart_images/dist/jquery.smart_images.js"></script>
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <style type="text/css">
     img {
@@ -60,11 +60,67 @@
 
   <h2>Demo Instructions</h2>
   <ol>
-    <li>View the image source in the Example below in the inspector</li>
-    <li>Now change your browser window width</li>
-    <li>Observe how the <code>img.src</code> changes and pulls in the image appropriate to the window width.</li>
+    <li>Change your browser window width and observe how the <code>img.src</code> changes and pulls in the image appropriate to the window width.</li>
   </ol>
   <hr/>
+
+  <h2>Example</h2>
+  <p>The image below does not use the above markup, but a variant with more breakpoints. Inspect source to learn
+    more. It is split into three slices to demonstrate the various downsize settings (always, never, loaded), in that
+    order.</p>
+  <div class="always">
+    <span data-si-srcset="images/319/1-always.jpg" data-si-media="(max-width: 319px)"></span>
+    <span data-si-srcset="images/479/1-always.jpg" data-si-media="(max-width: 479px)"></span>
+    <span data-si-srcset="images/767/1-always.jpg" data-si-media="(max-width: 767px)"></span>
+    <span data-si-srcset="images/1080/1-always.jpg" data-si-media="(min-width: 768px)"></span>
+    <img/>
+  </div>
+  <div class="never">
+    <span data-si-srcset="images/319/2-never.jpg" data-si-media="(max-width: 319px)"></span>
+    <span data-si-srcset="images/479/2-never.jpg" data-si-media="(max-width: 479px)"></span>
+    <span data-si-srcset="images/767/2-never.jpg" data-si-media="(max-width: 767px)"></span>
+    <span data-si-srcset="images/1080/2-never.jpg" data-si-media="(min-width: 768px)"></span>
+    <img/>
+  </div>
+  <div class="loaded">
+    <span data-si-srcset="images/319/3-loaded.jpg" data-si-media="(max-width: 319px)"></span>
+    <span data-si-srcset="images/479/3-loaded.jpg" data-si-media="(max-width: 479px)"></span>
+    <span data-si-srcset="images/767/3-loaded.jpg" data-si-media="(max-width: 767px)"></span>
+    <span data-si-srcset="images/1080/3-loaded.jpg" data-si-media="(min-width: 768px)"></span>
+    <img/>
+  </div>
+
+  <h2>Theory/Concept</h2>
+  <p>For simplicity let's divide the horizontal plane in half, with a single breakpoint at 768px. In media queries we
+    would write the following:</p>
+
+  <pre>
+    // this targets "mobile"
+    h1 {
+      font-size: 12px;
+    }
+
+    // this targets "desktop"
+    @media only screen and (min-width: 768px) {
+      h1 {
+        font-size: 18px;
+      }
+    }
+  </pre>
+
+  <p>We can talk about this in terms of two ranges of x values:</p>
+  <ol>
+    <li>0 - 767px</li>
+    <li>768+</li>
+  </ol>
+
+  <p>Since we are talking about responsive images, and following the above layout, we need two (2) versions of the image:</p>
+  <ol>
+    <li>The first image needs to be 767px wide; to be displayed in our "mobile" context we just defined.</li>
+    <li>The last image needs to have a sensible width that is greater than 768px.  The size depends on your application, but might--for a standard website--be 1366px or 1080px, say.</li>
+  </ol>
+
+  With that in mind, let's move on to the markup.
 
   <h2>Markup</h2>
 
@@ -84,11 +140,28 @@
 
   <pre>
     &lt;div class="smart-image">
-      &lt;span data-si-srcset="images/768/water-buffalo.jpg" data-si-media="(max-width: 768px)">&lt;/span>
-      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="(min-width: 769px)">&lt;/span>
+      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="(max-width: 767px)">&lt;/span>
+      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="(min-width: 768px)">&lt;/span>
       &lt;img/>
     &lt;/div>
 </pre>
+
+  <h3>The Last, The Anomoly</h3>
+  <h4>The relationship between `media` and `srcset`</h4>
+  <p>To prove a point I'm going to redefine with 4 breakpoints and then point something out.</p>
+
+  <pre>
+    &lt;div class="smart-image">
+      &lt;span data-si-srcset="images/319/water-buffalo.jpg" data-si-media="(max-width: 319px)">&lt;/span>
+      &lt;span data-si-srcset="images/479/water-buffalo.jpg" data-si-media="(max-width: 479px)">&lt;/span>
+      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="(max-width: 767px)">&lt;/span>
+      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="(min-width: 768px)">&lt;/span>
+      &lt;img/>
+    &lt;/div>
+</pre>
+
+  <strong>Except for the last and widest breakpoint, the image width MUST match the `(max-width:...` in the `data-si-media` declaration.  The last will NEVER match; the `data-si-srcset` will always be somewhat larger than the `data-si-media`.</strong>
+
   <h2>Javascript</h2>
   <pre>
     $('document').ready(function () {
@@ -99,31 +172,7 @@
   <h2>Configuration</h2>
   <p>See the source for configuration options, including alternative selector classes, and data attributes.</p>
 
-  <h2>Example</h2>
-  <p>The image below does not use the above markup, but a variant with more breakpoints. Inspect source to learn
-    more. It is split into three slices to demonstrate the various downsize settings (always, never, loaded), in that
-    order.</p>
-  <div class="always">
-    <span data-si-srcset="images/320/1-always.jpg" data-si-media="(max-width: 320px)"></span>
-    <span data-si-srcset="images/480/1-always.jpg" data-si-media="(max-width: 480px)"></span>
-    <span data-si-srcset="images/768/1-always.jpg" data-si-media="(max-width: 768px)"></span>
-    <span data-si-srcset="images/1080/1-always.jpg" data-si-media="(min-width: 769px)"></span>
-    <img/>
-  </div>
-  <div class="never">
-    <span data-si-srcset="images/320/2-never.jpg" data-si-media="(max-width: 320px)"></span>
-    <span data-si-srcset="images/480/2-never.jpg" data-si-media="(max-width: 480px)"></span>
-    <span data-si-srcset="images/768/2-never.jpg" data-si-media="(max-width: 768px)"></span>
-    <span data-si-srcset="images/1080/2-never.jpg" data-si-media="(min-width: 769px)"></span>
-    <img/>
-  </div>
-  <div class="loaded">
-    <span data-si-srcset="images/320/3-loaded.jpg" data-si-media="(max-width: 320px)"></span>
-    <span data-si-srcset="images/480/3-loaded.jpg" data-si-media="(max-width: 480px)"></span>
-    <span data-si-srcset="images/768/3-loaded.jpg" data-si-media="(max-width: 768px)"></span>
-    <span data-si-srcset="images/1080/3-loaded.jpg" data-si-media="(min-width: 769px)"></span>
-    <img/>
-  </div>
+
 
 
   <hr/>
