@@ -7,7 +7,7 @@
  * Copyright 2017, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Wed Mar 29 21:22:55 PDT 2017
+ * Date: Wed Mar 29 21:24:23 PDT 2017
  *
  * @link http://www.intheloftstudios.com/packages/js/breakpointX
  */
