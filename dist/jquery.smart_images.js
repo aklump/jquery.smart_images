@@ -1,5 +1,5 @@
 /**
- * Smart Images jQuery JavaScript Plugin v0.1.4
+ * Smart Images jQuery JavaScript Plugin v0.1.5
  * http://www.intheloftstudios.com/packages/js/smart_images
  *
  * Window width-based image loading for responsive applications.
@@ -7,7 +7,7 @@
  * Copyright 2017, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Thu Mar 30 08:31:50 PDT 2017
+ * Date: Thu Mar 30 08:35:47 PDT 2017
  *
  * @link http://www.intheloftstudios.com/packages/js/breakpointX
  */
@@ -271,7 +271,7 @@
    * @return {string}
    */
   $.fn.smartImages.version = function () {
-    return '0.1.4';
+    return '0.1.5';
   };
 
 })(jQuery);
