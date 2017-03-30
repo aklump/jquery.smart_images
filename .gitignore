@@ -4,3 +4,5 @@ demo/jquery.smart_images.min.js
 !.web_package/hooks
 tests
 .idea
+dist/lib/breakpointx/*
+!dist/lib/breakpointx/dist

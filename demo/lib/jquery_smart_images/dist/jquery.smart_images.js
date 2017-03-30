@@ -7,7 +7,7 @@
  * Copyright 2017, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Wed Mar 29 21:24:57 PDT 2017
+ * Date: Thu Mar 30 08:31:50 PDT 2017
  *
  * @link http://www.intheloftstudios.com/packages/js/breakpointX
  */
@@ -81,10 +81,13 @@
         p           = s.dataPrefix,
         max         = [],
         min         = [],
-        breakpoints = [0];
+        breakpoints = [0],
+        srcSelector = s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']';
 
     // Acquire the data value from all span elements
-    $el.find('[data-' + s.dataPrefix + s.dataMediaSuffix + ']').each(function () {
+    $el.find(srcSelector)
+    .hide()
+    .each(function () {
       // We cannot use .data here, because the attr may have been altered AFTER data was read in.  So we must use .attr
       // instead 2017-03-29T21:19, aklump.
       var data  = $(this).attr('data-' + p + s.dataMediaSuffix),
@@ -201,6 +204,13 @@
      * Used with $el.find() to locate the img tag that gets replaced with src.
      */
     imgSelector: 'img',
+
+    /**
+     * Used with $el.find() to locate the tags that contain the srcsets. By default this is null because it uses the
+     * data suffixes above, but setting it here will override that behavior.  This would allow you to use an alternate
+     * structure if necessary.
+     */
+    srcSelector: null,
 
     /**
      * How many milliseconds to wait to read the window width after a resize event.
