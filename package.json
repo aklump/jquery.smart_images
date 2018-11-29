@@ -26,5 +26,8 @@
     ],
     "bugs": {
         "url": "https://github.com/aklump/jquery.smart_images/issues"
+    },
+    "bin": {
+        "smart-images-resizer": "./resizer.sh"
     }
 }
