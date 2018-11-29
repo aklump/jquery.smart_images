@@ -1,7 +1,7 @@
 {
     "name": "@aklump\/smart-images",
     "description": "Window width-based image loading for responsive applications.",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "main": "smart-images.min.js",
     "license": "MIT",
     "author": "Aaron Klump <sourcecode@intheloftstudios.com>",
