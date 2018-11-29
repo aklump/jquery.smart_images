@@ -92,19 +92,30 @@
         // 2017-03-29T21:19, aklump.
         var data = $(this).attr('data-' + p + s.dataMediaSuffix),
           src = $(this).attr('data-' + p + s.dataSrcSuffix),
-          parts = data.match(/(.+)-width:\s*(\d+)px/);
+          declarations = data.match(/((min|max)\-width:\s*(\d+)\s*px)/g);
 
-        self.srcMap[data] = src;
+        for (var i in declarations) {
+          var declaration = declarations[i],
+            parts = declaration.match(/(.+)-width:\s*(\d+)\s*px/);
+          self.srcMap[data.replace(/: /g, ':')] = src;
 
-        if (parts.length !== 3) {
-          throw 'Bad value: \'' + data + '\' in media.';
-        }
-        var pixels = 1 * parts[2] + 1;
-        if (parts[1] === 'min') {
-          min.push([src, pixels]);
-        } else if (parts[1] === 'max') {
-          max.push([src, pixels]);
-          breakpoints.push(pixels);
+          if (parts.length !== 3) {
+            throw 'Bad value: \'' + data + '\' in media.';
+          }
+
+          var pixels = parts[2] * 1,
+            isCompoundMediaQuery = declarations.length > 1;
+          if (isCompoundMediaQuery) {
+            pixels += (parts[1] === 'min' ? -1 : 1);
+          } else {
+            pixels++;
+          }
+          if (isCompoundMediaQuery || parts[1] === 'max') {
+            max.push([src, pixels]);
+            breakpoints.push(pixels);
+          } else if (parts[1] === 'min') {
+            min.push([src, pixels]);
+          }
         }
       });
 
@@ -119,13 +130,13 @@
 
     // Assert we only have one min
     if (min.length !== 1) {
-      throw 'You MUST declare only one min-width.';
+      throw 'You MUST declare only 1 min-width.';
     }
     max.sort(sort);
 
     // Assert that the min is 1 pixel greater than the last min.
     if (min[0][1] - 1 !== max[max.length - 1][1]) {
-      throw 'The min-width MUST be one pixel > than highest max-width.';
+      throw 'The min-width MUST be 1px > than highest max-width.';
     }
 
     // Now create the breakpoint object
@@ -160,21 +171,49 @@
   };
 
   /**
+   * Return all possible media queries for a min/max range.
+   *
+   * @param int min The lower breakpoint
+   * @param int max One pixel less than the upper breakpoint.
+   * @returns {string[]}
+   */
+  function getMediaQueryPermutations(min, max) {
+    var permutations = [];
+    if (max) {
+      permutations.push('max-width:' + (min  - 1) + 'px');
+      permutations.push('(min-width:' + (min + 1) + 'px) and (max-width:' + max + 'px)');
+    } else {
+      permutations.push('min-width:' + min + 'px');
+    }
+    return permutations;
+  }
+
+  /**
    * Respond to entering into a breakpoint.
    *
    * @param breakpointAlias
    */
   SmartImages.prototype.changeHandler = function(data) {
-    var src = this.srcMap[data.name],
-      abort = this.settings.onBeforeChange && this.settings.onBeforeChange.call(this, data.name, src) === false;
+
+    var names = getMediaQueryPermutations(data.minWidth, data.maxWidth),
+      name = null;
+    for (var i in names) {
+      if (this.srcMap[names[i]]) {
+        name = names[i];
+        break;
+      }
+    }
+
+    var src = this.srcMap[name] || '',
+      abort = this.settings.onBeforeChange && this.settings.onBeforeChange.call(this, name, src) === false;
     if (abort) {
       return;
     }
     this.largestLoaded = data.maxWidth || true;
-    this.loaded[data.name] = true;
+    this.loaded[name] = true;
     this.$img.attr('src', src);
     if (this.settings.onAfterChange) {
-      this.settings.onAfterChange.call(this, data.name, src);
+      this.settings.onAfterChange.call(this, name, src);
     }
   };
 

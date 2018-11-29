@@ -7,7 +7,8 @@
   <script src="smart-images.js"></script>
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <style type="text/css">
-    img {
+    .always img, .never img, .loaded img {
+      width: 100%;
       max-width: 100%;
       height: auto;
     }
@@ -149,8 +150,8 @@
 
   <pre>
     &lt;div class="smart-image">
-      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="max-width: 767px">&lt;/span>
-      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="min-width: 768px">&lt;/span>
+      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="max-width:767px">&lt;/span>
+      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="min-width:768px">&lt;/span>
       &lt;img/>
     &lt;/div>
 </pre>
@@ -161,10 +162,10 @@
 
   <pre>
     &lt;div class="smart-image">
-      &lt;span data-si-srcset="images/319/water-buffalo.jpg" data-si-media="max-width: 319px">&lt;/span>
-      &lt;span data-si-srcset="images/479/water-buffalo.jpg" data-si-media="max-width: 479px">&lt;/span>
-      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="max-width: 767px">&lt;/span>
-      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="min-width: 768px">&lt;/span>
+      &lt;span data-si-srcset="images/319/water-buffalo.jpg" data-si-media="max-width:319px">&lt;/span>
+      &lt;span data-si-srcset="images/479/water-buffalo.jpg" data-si-media="max-width:479px">&lt;/span>
+      &lt;span data-si-srcset="images/767/water-buffalo.jpg" data-si-media="max-width:767px">&lt;/span>
+      &lt;span data-si-srcset="images/1080/water-buffalo.jpg" data-si-media="min-width:768px">&lt;/span>
       &lt;img/>
     &lt;/div>
 </pre>

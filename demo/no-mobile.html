@@ -44,16 +44,23 @@
   </ol>
   <hr/>
 
+  <pre>
+  &lt;div class="smart-image">
+    &lt;span data-si-srcset="images/767/smart-images.jpg" data-si-media="(min-width: 481px) and (max-width: 767px)">&lt;/span>
+    &lt;span data-si-srcset="images/1080/smart-images.jpg" data-si-media="min-width: 768px">&lt;/span>
+    &lt;img/>
+  &lt;/div>
+  </pre>
+
   <h2>Example</h2>
-  <p>The image below does not use the above markup, but a variant with more breakpoints. Inspect source to learn
-    more. It is split into three slices to demonstrate the various downsize settings (always, never, loaded), in that
-    order. You will notice a different if you load the page wide and then downsize VS. load the page narrow and then upsize.</p>
+  <p>There will be no mobile image loaded if this page is loaded at a width less than 481 pixels. This saves bandwidth for mobile devices, if your design warrants that.  The distinguising factor in this example is this <code>data-si-media="(min-width: 481px) and (max-width: 767px)"</code> combined media query on the first <code>span</code>.</p>
 
   <div class="smart-image">
     <span data-si-srcset="images/767/smart-images.jpg" data-si-media="(min-width: 481px) and (max-width: 767px)"></span>
     <span data-si-srcset="images/1080/smart-images.jpg" data-si-media="min-width: 768px"></span>
     <img/>
   </div>
+
 
   <hr/>
   <p class="text-muted">

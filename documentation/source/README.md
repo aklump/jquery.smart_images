@@ -30,8 +30,8 @@ Here is an example, the simplest use case, a single breakpoint between mobile an
 3. Define the HTML markup:
 
         <div class="smart-image">
-          <span data-si-srcset="mobile.jpg" data-si-media="max-width: 767px"></span>
-          <span data-si-srcset="desktop.jpg" data-si-media="min-width: 768px"></span>
+          <span data-si-srcset="mobile.jpg" data-si-media="max-width:767px"></span>
+          <span data-si-srcset="desktop.jpg" data-si-media="min-width:768px"></span>
           <img/>
         </div>
 
