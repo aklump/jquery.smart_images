@@ -8,5 +8,4 @@
 test -e "$7/jquery.smart_images.min.js" && rm "$7/jquery.smart_images.min.js"
 
 # Remove the dist folder
-test -e "$7/dist" && rm -rf "$7/dist"
 test -e "$7/demo/lib/jquery_smart_images/dist" && rm -rf "$7/demo/lib/jquery_smart_images/dist"
