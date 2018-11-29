@@ -4,4 +4,5 @@
 # Copy relevent files from parent into demo
 #
 
-cp jquery.smart_images.js demo/
+cp smart-images.js demo/
+cd demo && yarn

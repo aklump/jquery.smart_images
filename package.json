@@ -1,0 +1,16 @@
+{
+  "name": "@aklump/smart-images",
+  "description": "Window width-based image loading for responsive applications.",
+  "version": "0.1.7",
+  "main": "smart-images.min.js",
+  "license": "MIT",
+  "author": "Aaron Klump <sourcecode@intheloftstudios.com>",
+  "homepage": "http://www.intheloftstudios.com/packages/js/smart_images",
+  "private": true,
+  "devDependencies": {
+    "uglify-js": "^3.4.9"
+  },
+  "dependencies": {
+    "@aklump/breakpointx": "^0.4.10"
+  }
+}
