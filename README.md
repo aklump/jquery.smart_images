@@ -11,7 +11,7 @@ Window width based image loading for responsive applications.
 ## Quick Start
 
 1.  Install with `yarn add @aklump/smart-images` or `npm i @aklump/smart-images`
-1.  Please open `demo/index.html` to see this plugin in action.
+1.  Please open `demo/index.html` to see this plugin in action. The demo is only available if you download this from GitHub; it is not included in the npm package.
 
 ## Requirements
 

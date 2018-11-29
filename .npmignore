@@ -1,5 +1,7 @@
 /.idea
 /.web_package
-/demo
 /documentation
 /yarn.lock
+.gitkeep
+node_modules
+/demo
