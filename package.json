@@ -6,7 +6,6 @@
     "license": "MIT",
     "author": "Aaron Klump <sourcecode@intheloftstudios.com>",
     "homepage": "http:\/\/www.intheloftstudios.com\/packages\/js\/jquery.smart_images",
-    "private": true,
     "devDependencies": {
         "uglify-js": "^3.4.9"
     },
