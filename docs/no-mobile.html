@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Use Case:No Image in Mobile</title>
+  <link href="search/tipuesearch.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body class="page--no-mobile">
+<header>
+  <div class="pager">
+  <a href="README.html" class="prev README">&laquo;Smart Images</a>
+  <a href="index.html" class="index">Index</a>
+  <a href="resizer.html" class="next resizer">Using _resizer.sh_ to manipulate images&raquo;</a>
+</div>
+</header>
+
+
+  <h1>Use Case:No Image in Mobile</h1>
+  <div class="breadcrumb"><a href="index.html">Index</a></div>
+
+<section>
+
+<p>The first code block represents a normal use case for 2 breakpoints and three images:</p>
+
+<pre><code>&lt;div class="smart-image"&gt;
+  &lt;span data-si-srcset="small.jpg" data-si-media="max-width:480px"&gt;&lt;/span&gt;
+  &lt;span data-si-srcset="medium.jpg" data-si-media="max-width:767px"&gt;&lt;/span&gt;
+  &lt;span data-si-srcset="large.jpg" data-si-media="min-width:768px"&gt;&lt;/span&gt;
+  &lt;img/&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>But if we didn't want an image to appear when screen is &lt;= 480px, what to do?  Alter the markup as per the following:</p>
+
+<pre><code>&lt;div class="smart-image"&gt;
+  &lt;span data-si-srcset="medium.jpg" data-si-media="(min-width:481px) and (max-width:767px)"&gt;&lt;/span&gt;
+  &lt;span data-si-srcset="large.jpg" data-si-media="min-width:768px"&gt;&lt;/span&gt;
+  &lt;img/&gt;
+&lt;/div&gt;
+</code></pre>
+</section>
+
+<div class="search__results">
+  <div id="tipue_search_content"></div>
+</div>
+
+<footer>
+  <div class="pager">
+  <a href="README.html" class="prev README">&laquo;Smart Images</a>
+  <a href="index.html" class="index">Index</a>
+  <a href="resizer.html" class="next resizer">Using _resizer.sh_ to manipulate images&raquo;</a>
+</div>
+  
+  <div id="footer-legaleeze">
+    <p class="legaleeze center">Version: 0.1.8 &bull; Last Updated: Thu, 29 Nov 2018 10:03:54 -0800</p>
+  </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/core.js"></script>
+</body>
+</html>
+

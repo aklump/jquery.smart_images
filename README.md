@@ -25,13 +25,13 @@ If you find this project useful... please consider [making a donation](https://w
 
 Here is an example, the simplest use case, a single breakpoint between mobile and desktop at 768px.  Your usage will vary depending upon the number of breakpoints you choose.
 
-1. Create a mobile image at 767px wide.
+1. Create a mobile image at 767px wide. Note: 1 px less than your breakpoint.
 2. Create a desktop image larger than 767px and wide enough for desktop, e.g. 1080px.
 3. Define the HTML markup:
 
         <div class="smart-image">
-          <span data-si-srcset="mobile.jpg" data-si-media="max-width: 767px"></span>
-          <span data-si-srcset="desktop.jpg" data-si-media="min-width: 768px"></span>
+          <span data-si-srcset="mobile.jpg" data-si-media="max-width:767px"></span>
+          <span data-si-srcset="desktop.jpg" data-si-media="min-width:768px"></span>
           <img/>
         </div>
 
