@@ -2,10 +2,7 @@
 <html>
 <head>
   <title>Demo of Smart Images</title>
-  <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous"></script>
+  <script src="node_modules/jquery/dist/jquery.slim.js"></script>
   <script src="node_modules/@aklump/breakpointx/BreakpointX.js"></script>
   <script src="smart-images.js"></script>
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -16,17 +13,17 @@
     }
   </style>
   <script>
-    (function ($) {
-      $('document').ready(function () {
+    (function($) {
+      $('document').ready(function() {
         $('.always').smartImages({
-          downsize      : 'always',
-          onInit        : function () {
+          downsize: 'always',
+          onInit: function() {
             console.log('onInit called');
           },
-          onBeforeChange: function (bp, src) {
+          onBeforeChange: function(bp, src) {
             console.log('onBeforeChange called', bp, src);
           },
-          onAfterChange : function (bp, src) {
+          onAfterChange: function(bp, src) {
             console.log('onAfterChange called', bp, src);
           }
         });
@@ -63,14 +60,16 @@
 
   <h2>Demo Instructions</h2>
   <ol>
-    <li>Change your browser window width and observe how the <code>img.src</code> changes and pulls in the image appropriate to the window width.</li>
+    <li>Change your browser window width and observe how the
+      <code>img.src</code> changes and pulls in the image appropriate to the window width.
+    </li>
   </ol>
   <hr/>
 
   <h2>Example</h2>
   <p>The image below does not use the above markup, but a variant with more breakpoints. Inspect source to learn
     more. It is split into three slices to demonstrate the various downsize settings (always, never, loaded), in that
-    order.  You will notice a different if you load the page wide and then downsize VS. load the page narrow and then upsize.</p>
+    order. You will notice a different if you load the page wide and then downsize VS. load the page narrow and then upsize.</p>
   <div class="always">
     <span data-si-srcset="images/319/1-always.jpg" data-si-media="max-width: 319px"></span>
     <span data-si-srcset="images/479/1-always.jpg" data-si-media="max-width: 479px"></span>
@@ -120,7 +119,7 @@
   <p>Since we are talking about responsive images, and following the above layout, we need two (2) versions of the image:</p>
   <ol>
     <li>The first image needs to be 767px wide; to be displayed in our "mobile" context we just defined.</li>
-    <li>The last image needs to have a sensible width that is greater than 768px.  The size depends on your application, but might--for a standard website--be 1366px or 1080px, say.</li>
+    <li>The last image needs to have a sensible width that is greater than 768px. The size depends on your application, but might--for a standard website--be 1366px or 1080px, say.</li>
   </ol>
 
   With that in mind, let's move on to the markup.
@@ -129,14 +128,21 @@
 
   <ul>
     <li>You MUST have at least two image paths defined based on a media query regarding a screen width.</li>
-    <li>You MUST have only one <code>min-width</code> declaration and it needs to be 1px greater than your highest
+    <li>You MUST have only one
+      <code>min-width</code> declaration and it needs to be 1px greater than your highest
       <code>max-width</code> declaration.
     </li>
-    <li>You MAY have as many <code>max-width</code> declarations as you want breakpoints.</li>
-    <li>Each <code>max-width</code> tag MUST define a path to an image the SHOULD be the same width as the <code>max-width</code>
+    <li>You MAY have as many
+      <code>max-width</code> declarations as you want breakpoints.
+    </li>
+    <li>Each
+      <code>max-width</code> tag MUST define a path to an image the SHOULD be the same width as the
+      <code>max-width</code>
       value.
-    <li>The single <code>min-width</code> tag MUST define a path to the largest image you want to load and it SHOULD be
-      larger than the <code>min-width</code> value, e.g., if <code>min-width=769</code> the image may be 1080px wide.
+    <li>The single
+      <code>min-width</code> tag MUST define a path to the largest image you want to load and it SHOULD be
+      larger than the <code>min-width</code> value, e.g., if
+      <code>min-width=769</code> the image may be 1080px wide.
     </li>
     </li>
   </ul>
@@ -163,7 +169,7 @@
     &lt;/div>
 </pre>
 
-  <strong>Except for the last and widest breakpoint, the image width MUST match the `(max-width:...` in the `data-si-media` declaration.  The last will NEVER match; the `data-si-srcset` will always be somewhat larger than the `data-si-media`.</strong>
+  <strong>Except for the last and widest breakpoint, the image width MUST match the `(max-width:...` in the `data-si-media` declaration. The last will NEVER match; the `data-si-srcset` will always be somewhat larger than the `data-si-media`.</strong>
 
   <h2>Javascript</h2>
   <pre>
@@ -176,7 +182,8 @@
   <p>See the source for configuration options, including alternative selector classes, and data attributes.</p>
 
   <hr/>
-  <p class="text-muted"><strong>jquery.smart_images</strong> is brought to you by <a
+  <p class="text-muted">
+    <strong>jquery.smart_images</strong> is brought to you by <a
       href="http://www.intheloftstudios.com">In the Loft Studios</a></p>
 </div>
 

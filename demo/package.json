@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@aklump/breakpointx": "^0.4.10"
+    "@aklump/breakpointx": "^0.4.10",
+    "jquery": ">=1.12"
   }
 }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Smart Images</title>
+  <link href="search/tipuesearch.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body class="page--readme">
+<header>
+  <div class="pager">
+  <a href="CHANGELOG.html" class="prev CHANGELOG">&laquo;0.2 2018-11-29T07:45</a>
+  <a href="index.html" class="index">Index</a>
+  <a href="index.html" class="next index">Index&raquo;</a>
+</div>
+</header>
+
+
+  <h1>Smart Images</h1>
+  <div class="breadcrumb"><a href="index.html">Index</a></div>
+
+<section>
+
+<p><img src="images/smart-images.jpg" alt="Smart Images" /></p>
+
+<h2>Summary</h2>
+
+<p>Window width based image loading for responsive applications.</p>
+
+<p><strong>Visit <a href="https://aklump.github.io/smart_images">https://aklump.github.io/smart_images</a> for full documentation.</strong></p>
+
+<h2>Quick Start</h2>
+
+<ol>
+<li>Install with <code>yarn add @aklump/smart-images</code> or <code>npm i @aklump/smart-images</code></li>
+<li>Please open <code>demo/index.html</code> to see this plugin in action.</li>
+</ol>
+
+<h2>Requirements</h2>
+
+<ul>
+<li>jQuery >= 1.4</li>
+</ul>
+
+<h2>Contributing</h2>
+
+<p>If you find this project useful... please consider <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=4E5KZHDQCEUV8&amp;item_name=Gratitude%20for%20aklump%2Fsmart_images">making a donation</a>.</p>
+
+<h2>Installation</h2>
+
+<ol>
+<li>lorem</li>
+<li>ipsum</li>
+</ol>
+
+<h2>Usage</h2>
+
+<p>Here is an example, the simplest use case, a single breakpoint between mobile and desktop at 768px.  Your usage will vary depending upon the number of breakpoints you choose.</p>
+
+<ol>
+<li>Create a mobile image at 767px wide.</li>
+<li>Create a desktop image larger than 767px and wide enough for desktop, e.g. 1080px.</li>
+<li><p>Define the HTML markup:</p>
+
+<pre><code>&lt;div class="smart-image"&gt;
+  &lt;span data-si-srcset="mobile.jpg" data-si-media="max-width: 767px"&gt;&lt;/span&gt;
+  &lt;span data-si-srcset="desktop.jpg" data-si-media="min-width: 768px"&gt;&lt;/span&gt;
+  &lt;img/&gt;
+&lt;/div&gt;
+</code></pre></li>
+<li><p>Add the Javascript.</p>
+
+<pre><code>$('document').ready(function () {
+  $('.smart-image').smartImages();
+});
+</code></pre></li>
+<li><p>Set your browser width to less than 768 pixels and load your page.</p></li>
+<li>Notice the mobile image has been set in the img tag's <code>src</code> attribute.</li>
+<li>Resize to greater than 768 pixels and notice the img tag <code>src</code> changes to <em>desktop.jpg</em>.</li>
+</ol>
+</section>
+
+<div class="search__results">
+  <div id="tipue_search_content"></div>
+</div>
+
+<footer>
+  <div class="pager">
+  <a href="CHANGELOG.html" class="prev CHANGELOG">&laquo;0.2 2018-11-29T07:45</a>
+  <a href="index.html" class="index">Index</a>
+  <a href="index.html" class="next index">Index&raquo;</a>
+</div>
+  
+  <div id="footer-legaleeze">
+    <p class="legaleeze center">Version: 0.1.7 &bull; Last Updated: Thu, 29 Nov 2018 07:47:41 -0800</p>
+  </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/core.js"></script>
+</body>
+</html>
+

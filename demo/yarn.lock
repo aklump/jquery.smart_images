@@ -6,3 +6,8 @@
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/@aklump/breakpointx/-/breakpointx-0.4.10.tgz#288b8eae570dc3d8eda5aab712aec7fe39d6a5e6"
   integrity sha512-jJbrH80eVVLQILaxbVmqFU38U1CWAo2GSjzYt9V/YUc2z5h25aP9qY287Ed7yQU/5to+ozWkHfZHjpWGRMzC3g==
+
+jquery@>=1.12:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==

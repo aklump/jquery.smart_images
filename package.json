@@ -11,6 +11,7 @@
     "uglify-js": "^3.4.9"
   },
   "dependencies": {
-    "@aklump/breakpointx": "^0.4.10"
+    "@aklump/breakpointx": "^0.4.10",
+    "jquery": ">=1.12"
   }
 }

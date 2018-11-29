@@ -1,6 +1,6 @@
 # Smart Images
 
-![Smart Images](docs/images/smart-images.jpg)
+![Smart Images](images/smart-images.jpg)
 
 ## Summary
 
