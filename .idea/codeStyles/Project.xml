@@ -14,14 +14,22 @@
       <option name="HTML_ATTRIBUTE_WRAP" value="0" />
       <option name="HTML_TEXT_WRAP" value="0" />
     </HTMLCodeStyleSettings>
-    <JSCodeStyleSettings version="0">
-      <option name="USE_SEMICOLON_AFTER_STATEMENT" value="false" />
+    <JSCodeStyleSettings version="1">
       <option name="FORCE_SEMICOLON_STYLE" value="true" />
       <option name="SPACE_BEFORE_FUNCTION_LEFT_PARENTH" value="false" />
       <option name="USE_DOUBLE_QUOTES" value="false" />
       <option name="FORCE_QUOTE_STYlE" value="true" />
       <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
     </JSCodeStyleSettings>
+    <MarkdownNavigatorCodeStyleSettings>
+      <option name="USE_ACTUAL_CHAR_WIDTH" value="false" />
+      <option name="KEEP_TRAILING_SPACES" value="0" />
+      <option name="LIST_ADD_BLANK_LINE_BEFORE" value="true" />
+      <option name="LIST_ALIGN_FIRST_LINE_TEXT" value="true" />
+      <option name="NEW_BULLET_LIST_ITEM_MARKER" value="2" />
+      <option name="SMART_EDIT_TABLES" value="true" />
+      <option name="RIGHT_MARGIN" value="72" />
+    </MarkdownNavigatorCodeStyleSettings>
     <PHPCodeStyleSettings>
       <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true" />
       <option name="PHPDOC_BLANK_LINE_BEFORE_TAGS" value="true" />
