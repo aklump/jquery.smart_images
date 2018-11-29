@@ -1,7 +1,7 @@
 {
     "name": "@aklump\/smart-images",
     "description": "Window width-based image loading for responsive applications.",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "main": "smart-images.js",
     "license": "MIT",
     "author": "Aaron Klump <sourcecode@intheloftstudios.com>",
@@ -16,7 +16,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https:\/\/github.com:aklump/jquery.smart_images.git"
+        "url": "git+https:\/\/github.com:aklump\/jquery.smart_images.git"
     },
     "keywords": [
         "responsive",
@@ -25,9 +25,9 @@
         "jquery"
     ],
     "bugs": {
-        "url": "https://github.com/aklump/jquery.smart_images/issues"
+        "url": "https:\/\/github.com\/aklump\/jquery.smart_images\/issues"
     },
     "bin": {
-        "smart-images-resizer": "./resizer.sh"
+        "smart-images-resizer": ".\/resizer.sh"
     }
 }
