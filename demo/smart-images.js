@@ -7,7 +7,7 @@
  * Copyright 2017-2018, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 3 licenses.
  *
- * Date: Thu Nov 29 10:36:14 PST 2018
+ * Date: Fri Nov 30 08:09:28 PST 2018
  */
 /**
  * @link
@@ -39,11 +39,32 @@
  *
  * To destroy the effects of this you may call the destroy method.
  */
-
-;(function($) {
-  'use strict';
-
-  // The actual plugin constructor
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery', '@aklump/breakpointx'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = function(root, jQuery) {
+      if (jQuery === undefined) {
+        // require('jQuery') returns a factory that requires window to
+        // build a jQuery instance, we normalize how we use modules
+        // that require this pattern but the window provided is a noop
+        // if it's defined (how jquery works)
+        if (typeof window !== 'undefined') {
+          jQuery = require('jquery');
+        } else {
+          jQuery = require('jquery')(root);
+        }
+      }
+      factory(jQuery, require('@aklump/breakpointx'));
+      return jQuery;
+    };
+  } else {
+    // Browser globals
+    factory(jQuery, BreakpointX);
+  }
+}(function($, BreakpointX) {
   function SmartImages(el, options) {
     this.settings = $.extend({}, $.fn.smartImages.defaults, options);
     this.$el = $(el);
@@ -54,7 +75,7 @@
   /**
    * Initialize an instance.
    */
-  SmartImages.prototype.init = function() {
+  SmartImages.init = function() {
     /**
      * Maps the aliases to the image srcs
      * @type {{}}
@@ -180,7 +201,7 @@
   function getMediaQueryPermutations(min, max) {
     var permutations = [];
     if (max) {
-      permutations.push('max-width:' + (min  - 1) + 'px');
+      permutations.push('max-width:' + (min - 1) + 'px');
       permutations.push('(min-width:' + (min + 1) + 'px) and (max-width:' + max + 'px)');
     } else {
       permutations.push('min-width:' + min + 'px');
@@ -193,8 +214,7 @@
    *
    * @param breakpointAlias
    */
-  SmartImages.prototype.changeHandler = function(data) {
-
+  SmartImages.changeHandler = function(data) {
     var names = getMediaQueryPermutations(data.minWidth, data.maxWidth),
       name = null;
     for (var i in names) {
@@ -217,7 +237,7 @@
     }
   };
 
-  SmartImages.prototype.destroy = function() {
+  SmartImages.destroy = function() {
     $(this.$el).removeData('smartImages');
   };
 
@@ -325,5 +345,5 @@
   $.fn.smartImages.version = function() {
     return '0.2.2';
   };
+}));
 
-})(jQuery);
