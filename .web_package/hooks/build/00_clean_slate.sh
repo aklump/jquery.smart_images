@@ -4,5 +4,6 @@
 # Remove generated files before all other build steps
 #
 
-# Remove the minified files so we ensure they get rebuilt
-test -e "demo/smart-images.js" && rm "demo/smart-images.js"
+[[ -f demo/smart-images.js ]] && rm -r demo/smart-images.js
+[[ -d dist ]] && rm -r dist
+mkdir dist

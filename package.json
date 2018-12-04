@@ -1,5 +1,6 @@
 {
     "name": "@aklump/smart-images",
+    "title": "Smart Images",
     "description": "Window width-based image loading for responsive applications.",
     "version": "0.2.2",
     "main": "./dist/smart-images.js",

@@ -4,5 +4,5 @@
 # Copy relevent files from parent into demo
 #
 
-cp src/smart-images.js demo/
+cp dist/smart-images.js demo/
 cd demo && yarn
