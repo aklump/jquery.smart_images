@@ -1,4 +1,4 @@
-# Use Case:No Image in Mobile
+# Use Case: No Image in Mobile
 
 The first code block represents a normal use case for 2 breakpoints and three images:
 
@@ -16,3 +16,9 @@ But if we didn't want an image to appear when screen is <= 480px, what to do?  A
       <span data-si-srcset="large.jpg" data-si-media="min-width:768px"></span>
       <img/>
     </div>
+
+Note that a CSS class is added to the image when `src` is empty, `si-has-not-src`.  (The `si-` prefix is configurable via the plugin settings.) You may want to use this class to do something with the `<img/>` tag.  For example to hide the broken image icon in some browsers you should at least do this:
+
+    img.si-has-not-src {
+      display: none;
+    }

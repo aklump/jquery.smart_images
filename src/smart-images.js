@@ -75,7 +75,7 @@
   /**
    * Initialize an instance.
    */
-  SmartImages.init = function() {
+  SmartImages.prototype.init = function() {
     /**
      * Maps the aliases to the image srcs
      * @type {{}}
@@ -214,7 +214,7 @@
    *
    * @param breakpointAlias
    */
-  SmartImages.changeHandler = function(data) {
+  SmartImages.prototype.changeHandler = function(data) {
     var names = getMediaQueryPermutations(data.minWidth, data.maxWidth),
       name = null;
     for (var i in names) {
@@ -232,12 +232,14 @@
     this.largestLoaded = data.maxWidth || true;
     this.loaded[name] = true;
     this.$img.attr('src', src);
+    var cssClass = this.settings.dataPrefix + 'has-not-src';
+    src ? this.$img.removeClass(cssClass) : this.$img.addClass(cssClass);
     if (this.settings.onAfterChange) {
       this.settings.onAfterChange.call(this, name, src);
     }
   };
 
-  SmartImages.destroy = function() {
+  SmartImages.prototype.destroy = function() {
     $(this.$el).removeData('smartImages');
   };
 
@@ -256,9 +258,10 @@
   $.fn.smartImages.defaults = {
 
     /**
-     * Namespace for all data tags, e.g. 'si-'.
+     * Namespace for all data tags and css classes, e.g. 'si-'.
      */
     dataPrefix: 'si-',
+
     dataSrcSuffix: 'srcset',
     dataMediaSuffix: 'media',
 
