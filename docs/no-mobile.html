@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Use Case:No Image in Mobile</title>
+  <title>Use Case: No Image in Mobile</title>
   <link href="search/tipuesearch.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
@@ -17,7 +17,7 @@
 </header>
 
 
-  <h1>Use Case:No Image in Mobile</h1>
+  <h1>Use Case: No Image in Mobile</h1>
   <div class="breadcrumb"><a href="index.html">Index</a></div>
 
 <section>
@@ -40,6 +40,13 @@
   &lt;img/&gt;
 &lt;/div&gt;
 </code></pre>
+
+<p>Note that a CSS class is added to the image when <code>src</code> is empty, <code>si-has-not-src</code>.  (The <code>si-</code> prefix is configurable via the plugin settings.) You may want to use this class to do something with the <code>&lt;img/&gt;</code> tag.  For example to hide the broken image icon in some browsers you should at least do this:</p>
+
+<pre><code>img.si-has-not-src {
+  display: none;
+}
+</code></pre>
 </section>
 
 <div class="search__results">
@@ -54,7 +61,7 @@
 </div>
   
   <div id="footer-legaleeze">
-    <p class="legaleeze center">Version: 0.2.2 &bull; Last Updated: Fri, 30 Nov 2018 08:09:30 -0800</p>
+    <p class="legaleeze center">Version: 0.2.2 &bull; Last Updated: Tue, 04 Dec 2018 17:02:56 -0800</p>
   </div>
 </footer>
 

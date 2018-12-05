@@ -3,13 +3,14 @@
 namespace AKlump\WebPackage;
 
 $build
-  ->documentation([
+  ->generateDocumentation()
+  ->loadFile('README.md')
+  ->replaceTokens([
+    'images/smart-images.jpg' => 'docs/images/smart-images.jpg',
+  ])
+  ->saveReplacingSourceFile()
+  ->addFilesToScm([
     'README.md',
     'CHANGELOG.md',
   ])
-  ->load('README.md')
-  ->replace([
-    'images/smart-images.jpg' => 'docs/images/smart-images.jpg',
-  ])
-  ->saveOverwrite()
   ->displayMessages();
