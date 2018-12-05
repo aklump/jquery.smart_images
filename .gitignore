@@ -4,6 +4,5 @@ demo/jquery.smart_images.min.js
 !.web_package/hooks
 !.web_package/composer.json
 !.web_package/functions.php
-tests
 node_modules
 documentation/core

@@ -64,6 +64,7 @@
     factory(jQuery, BreakpointX);
   }
 }(function($, BreakpointX) {
+
   function SmartImages(el, options) {
     this.settings = $.extend({}, $.fn.smartImages.defaults, options);
     this.$el = $(el);
@@ -75,6 +76,7 @@
    * Initialize an instance.
    */
   SmartImages.prototype.init = function() {
+
     /**
      * Maps the aliases to the image srcs
      * @type {{}}
@@ -94,83 +96,57 @@
      */
     this.largestLoaded = null;
 
+    /**
+     * An indexed array of integers holding the single breakpoint values.
+     * @type {Array}
+     */
+    var breakpointIndex = [];
+
     var $el = this.$el,
-      self = this,
-      s = self.settings,
-      p = s.dataPrefix,
-      max = [],
-      min = [],
-      breakpoints = [0],
-      srcSelector = s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']';
+      s = this.settings,
+      srcSelector = s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']',
+      $imageSpans = $el.find(srcSelector);
 
-    // Acquire the data value from all span elements
-    $el.find(srcSelector)
+    if ($imageSpans.length === 0) {
+      throw new Error('No elements found matching: ' + srcSelector);
+    }
+
+    var self = this,
+      p = this.settings.dataPrefix;
+
+    // Acquire the data value from all span elements.
+    $imageSpans
+
+    // These serve as data only, and should not display.
       .hide()
+
+      // It's imperative that we sort the elements first in case the DOM is
+      // dirty.
+      .sort(sortElementsByMediaQuery)
+
+      // Now we'll go through and setup our indexes based on queries.
       .each(function() {
-        // We cannot use .data here, because the attr may have been altered
-        // AFTER data was read in.  So we must use .attr instead
-        // 2017-03-29T21:19, aklump.
-        var data = $(this).attr('data-' + p + s.dataMediaSuffix),
-          src = $(this).attr('data-' + p + s.dataSrcSuffix),
-          declarations = data.match(/((min|max)\-width:\s*(\d+)\s*px)/g);
-
-        for (var i in declarations) {
-          var declaration = declarations[i],
-            parts = declaration.match(/(.+)-width:\s*(\d+)\s*px/);
-          self.srcMap[data.replace(/: /g, ':')] = src;
-
-          if (parts.length !== 3) {
-            throw 'Bad value: \'' + data + '\' in media.';
-          }
-
-          var pixels = parts[2] * 1,
-            isCompoundMediaQuery = declarations.length > 1;
-          if (isCompoundMediaQuery) {
-            pixels += (parts[1] === 'min' ? -1 : 1);
-          } else {
-            pixels++;
-          }
-          if (isCompoundMediaQuery || parts[1] === 'max') {
-            max.push([src, pixels]);
-            breakpoints.push(pixels);
-          } else if (parts[1] === 'min') {
-            min.push([src, pixels]);
-          }
-        }
+        var mediaQuery = getMediaQueryFromEl(this);
+        addBreakpointsToIndexByMediaQuery(mediaQuery);
+        var src = $(this).attr('data-' + p + s.dataSrcSuffix);
+        self.srcMap[mediaQuery.replace(/: /g, ':')] = src;
       });
 
-    var sort = function(a, b) {
-      a[1] *= 1;
-      b[1] *= 1;
-      if (a[1] === b[1]) {
-        return 1;
-      }
-      return a[1] < b[1] ? -1 : 1;
-    };
-
-    // Assert we only have one min
-    if (min.length !== 1) {
-      throw 'You MUST declare only 1 min-width.';
-    }
-    max.sort(sort);
-
-    // Assert that the min is 1 pixel greater than the last min.
-    if (min[0][1] - 1 !== max[max.length - 1][1]) {
-      throw 'The min-width MUST be 1px > than highest max-width.';
-    }
-
-    // Now create the breakpoint object
-    this.bp = new BreakpointX(breakpoints, {
+    // Now create the breakpoint object, which can be globally accessed by
+    // using the selector $el.data('breakpointX')
+    this.breakpointX = new BreakpointX(breakpointIndex, {
       resizeThrottle: s.resizeThrottle
     });
-    this.bp
-      .add('bigger', this.bp.aliases, function(from, to) {
+    this.$el.data('breakpointX', this.breakpointX);
+
+    this.breakpointX
+      .add('bigger', this.breakpointX.aliases, function(from, to) {
         var abort = (s.downsize === 'never' && (self.largestLoaded === true || (to.maxWidth && self.largestLoaded > to.maxWidth)));
         if (!abort) {
           self.changeHandler(to);
         }
       })
-      .add('smaller', this.bp.aliases, function(from, to) {
+      .add('smaller', this.breakpointX.aliases, function(from, to) {
         if (s.downsize === 'always' || s.downsize === 'loaded' && self.loaded[to.name]) {
           self.changeHandler(to);
         }
@@ -180,14 +156,84 @@
       this.settings.onInit.call(this);
     }
 
-    this.firstRun = true;
-    var width = this.bp.value(this.bp.current);
+    var width = this.breakpointX.value(this.breakpointX.current);
     this.changeHandler({
-      name: this.bp.current,
+      name: this.breakpointX.current,
       minWidth: width[0],
       maxWidth: width[1]
     });
-    this.firstRun = false;
+
+    /**
+     * Return an image elements's media query from it's data attribute.
+     *
+     * This is not the <img/> tag, but (probably) the <span> tag.
+     *s
+     * @param el
+     *   An element or jQuery object representing an image for a given
+     *   breakpoint.
+     * @returns {string}
+     */
+    function getMediaQueryFromEl(el) {
+      // We cannot use .data here, because the attr may have been altered
+      // AFTER data was read in.  So we must use .attr instead
+      // 2017-03-29T21:19, aklump.
+      return $(el).attr('data-' + s.dataPrefix + s.dataMediaSuffix) || '';
+    }
+
+    /**
+     * Get the min and max valus from a media query string.
+     *
+     * @param mediaQuery
+     *
+     * @returns {[]}
+     *   - 0 int The minumum value or null.
+     *   - 1 int The maximum value or Infinity.
+     */
+    function parseMediaQuery(mediaQuery) {
+      var min = mediaQuery.match(/min\-width:\s*(\d+)\s*px/),
+        max = mediaQuery.match(/max\-width:\s*(\d+)\s*px/);
+
+      return [min ? min[1] * 1 : null, max ? max[1] * 1 : null];
+    }
+
+    /**
+     * Parse a media query and update our different indexes.
+     * @param breakpointIndex
+     * @param mediaQuery
+     *
+     * @see breakpointIndex
+     */
+    function addBreakpointsToIndexByMediaQuery(mediaQuery) {
+      var range = parseMediaQuery(mediaQuery),
+        min = range[0] || 0,
+        max = range[1];
+      if (breakpointIndex.length === 0) {
+        breakpointIndex.push(min);
+      }
+      if (max) {
+        breakpointIndex.push(max + 1);
+      }
+    }
+
+    /**
+     * Sorting callback for sorting by media query.
+     *
+     * This will put items in the low to high based on media query.
+     *
+     * @param a
+     * @param b
+     * @returns {number}
+     */
+    function sortElementsByMediaQuery(a, b) {
+      var aq = parseMediaQuery(getMediaQueryFromEl(a));
+      aq = aq[1] ? aq[1] : aq[0];
+      aq *= 1;
+      var bq = parseMediaQuery(getMediaQueryFromEl(b));
+      bq = bq[1] ? bq[1] : bq[0];
+      bq *= 1;
+
+      return aq - bq;
+    };
   };
 
   /**
@@ -211,10 +257,10 @@
   /**
    * Respond to entering into a breakpoint.
    *
-   * @param breakpointAlias
+   * @param rangeDefinition
    */
-  SmartImages.prototype.changeHandler = function(data) {
-    var names = getMediaQueryPermutations(data.minWidth, data.maxWidth),
+  SmartImages.prototype.changeHandler = function(rangeDefinition) {
+    var names = getMediaQueryPermutations(rangeDefinition.minWidth, rangeDefinition.maxWidth),
       name = null;
     for (var i in names) {
       if (this.srcMap[names[i]]) {
@@ -228,7 +274,7 @@
     if (abort) {
       return;
     }
-    this.largestLoaded = data.maxWidth || true;
+    this.largestLoaded = rangeDefinition.maxWidth || true;
     this.loaded[name] = true;
     this.$img.attr('src', src);
     var cssClass = this.settings.dataPrefix + 'has-not-src';
@@ -238,18 +284,26 @@
     }
   };
 
+  /**
+   * Remove data from $el, which were added by this plugin.
+   */
   SmartImages.prototype.destroy = function() {
-    $(this.$el).removeData('smartImages');
+    this.$el.removeData('smartImages');
+    this.$el.removeData('breakpointX');
   };
 
   $.fn.smartImages = function(options, methodArgs) {
     return this.each(function() {
-      var obj = $.data(this, 'smartImages');
-      // When method is passed as a string option, call it.
-      if (obj && typeof options === 'string' && typeof obj[options] === 'function') {
-        obj[options](methodArgs);
-      } else {
-        $.data(this, 'smartImages', new SmartImages(this, options));
+      try {
+        var obj = $.data(this, 'smartImages');
+        // When method is passed as a string option, call it.
+        if (obj && typeof options === 'string' && typeof obj[options] === 'function') {
+          obj[options](methodArgs);
+        } else {
+          $.data(this, 'smartImages', new SmartImages(this, options));
+        }
+      } catch (e) {
+        console.log(e.name + ': ' + e.message);
       }
     });
   };
