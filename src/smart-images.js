@@ -5,7 +5,7 @@
  *
  * Copyright 2017__year, __author
  * @license Dual licensed under the MIT or GPL Version 3 licenses.
- * __homepage
+ * __url
  *
  * Date: __date
  */

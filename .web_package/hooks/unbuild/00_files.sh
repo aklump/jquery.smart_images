@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-rm smart-images.min.js
-rm demo/smart-images.js
-rm -r docs
+
+wp_rm dist
+wp_rm docs
+wp_rm demo/smart-images.js
