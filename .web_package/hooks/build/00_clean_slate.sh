@@ -6,4 +6,3 @@
 
 [[ -f demo/smart-images.js ]] && rm -r demo/smart-images.js
 [[ -d dist ]] && rm -r dist
-mkdir dist
