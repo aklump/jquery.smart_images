@@ -8,6 +8,7 @@
     "author": "Aaron Klump <sourcecode@intheloftstudios.com>",
     "homepage": "http://www.intheloftstudios.com/packages/js/jquery.smart_images",
     "devDependencies": {
+        "prettier": "1.15.3",
         "qunit": "^2.8.0",
         "uglify-js": "^3.4.9"
     },

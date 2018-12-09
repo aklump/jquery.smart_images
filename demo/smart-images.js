@@ -63,7 +63,7 @@
     // Browser globals
     factory(jQuery, BreakpointX);
   }
-}(function($, BreakpointX) {
+})(function($, BreakpointX) {
   function SmartImages(el, options) {
     this.settings = $.extend({}, $.fn.smartImages.defaults, options);
     this.$el = $(el);
@@ -101,10 +101,12 @@
       max = [],
       min = [],
       breakpoints = [0],
-      srcSelector = s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']';
+      srcSelector =
+        s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']';
 
     // Acquire the data value from all span elements
-    $el.find(srcSelector)
+    $el
+      .find(srcSelector)
       .hide()
       .each(function() {
         // We cannot use .data here, because the attr may have been altered
@@ -120,13 +122,13 @@
           self.srcMap[data.replace(/: /g, ':')] = src;
 
           if (parts.length !== 3) {
-            throw 'Bad value: \'' + data + '\' in media.';
+            throw "Bad value: '" + data + "' in media.";
           }
 
           var pixels = parts[2] * 1,
             isCompoundMediaQuery = declarations.length > 1;
           if (isCompoundMediaQuery) {
-            pixels += (parts[1] === 'min' ? -1 : 1);
+            pixels += parts[1] === 'min' ? -1 : 1;
           } else {
             pixels++;
           }
@@ -161,17 +163,23 @@
 
     // Now create the breakpoint object
     this.bp = new BreakpointX(breakpoints, {
-      resizeThrottle: s.resizeThrottle
+      resizeThrottle: s.resizeThrottle,
     });
     this.bp
       .add('bigger', this.bp.aliases, function(from, to) {
-        var abort = (s.downsize === 'never' && (self.largestLoaded === true || (to.maxWidth && self.largestLoaded > to.maxWidth)));
+        var abort =
+          s.downsize === 'never' &&
+          (self.largestLoaded === true ||
+            (to.maxWidth && self.largestLoaded > to.maxWidth));
         if (!abort) {
           self.changeHandler(to);
         }
       })
       .add('smaller', this.bp.aliases, function(from, to) {
-        if (s.downsize === 'always' || s.downsize === 'loaded' && self.loaded[to.name]) {
+        if (
+          s.downsize === 'always' ||
+          (s.downsize === 'loaded' && self.loaded[to.name])
+        ) {
           self.changeHandler(to);
         }
       });
@@ -185,7 +193,7 @@
     this.changeHandler({
       name: this.bp.current,
       minWidth: width[0],
-      maxWidth: width[1]
+      maxWidth: width[1],
     });
     this.firstRun = false;
   };
@@ -201,7 +209,9 @@
     var permutations = [];
     if (max) {
       permutations.push('max-width:' + (min - 1) + 'px');
-      permutations.push('(min-width:' + (min + 1) + 'px) and (max-width:' + max + 'px)');
+      permutations.push(
+        '(min-width:' + (min + 1) + 'px) and (max-width:' + max + 'px)'
+      );
     } else {
       permutations.push('min-width:' + min + 'px');
     }
@@ -224,7 +234,9 @@
     }
 
     var src = this.srcMap[name] || '',
-      abort = this.settings.onBeforeChange && this.settings.onBeforeChange.call(this, name, src) === false;
+      abort =
+        this.settings.onBeforeChange &&
+        this.settings.onBeforeChange.call(this, name, src) === false;
     if (abort) {
       return;
     }
@@ -246,7 +258,11 @@
     return this.each(function() {
       var obj = $.data(this, 'smartImages');
       // When method is passed as a string option, call it.
-      if (obj && typeof options === 'string' && typeof obj[options] === 'function') {
+      if (
+        obj &&
+        typeof options === 'string' &&
+        typeof obj[options] === 'function'
+      ) {
         obj[options](methodArgs);
       } else {
         $.data(this, 'smartImages', new SmartImages(this, options));
@@ -255,7 +271,6 @@
   };
 
   $.fn.smartImages.defaults = {
-
     /**
      * Namespace for all data tags and css classes, e.g. 'si-'.
      */
@@ -336,7 +351,7 @@
      * @param string breakpoint name
      * @param string image src
      */
-    onAfterChange: null
+    onAfterChange: null,
   };
 
   /**
@@ -347,5 +362,4 @@
   $.fn.smartImages.version = function() {
     return '0.2.4';
   };
-}));
-
+});

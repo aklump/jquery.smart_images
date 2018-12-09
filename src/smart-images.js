@@ -63,8 +63,7 @@
     // Browser globals
     factory(jQuery, BreakpointX);
   }
-}(function($, BreakpointX) {
-
+})(function($, BreakpointX) {
   function SmartImages(el, options) {
     this.settings = $.extend({}, $.fn.smartImages.defaults, options);
     this.$el = $(el);
@@ -76,7 +75,6 @@
    * Initialize an instance.
    */
   SmartImages.prototype.init = function() {
-
     /**
      * Maps the aliases to the image srcs
      * @type {{}}
@@ -104,7 +102,8 @@
 
     var $el = this.$el,
       s = this.settings,
-      srcSelector = s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']',
+      srcSelector =
+        s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']',
       $imageSpans = $el.find(srcSelector);
 
     if ($imageSpans.length === 0) {
@@ -117,7 +116,7 @@
     // Acquire the data value from all span elements.
     $imageSpans
 
-    // These serve as data only, and should not display.
+      // These serve as data only, and should not display.
       .hide()
 
       // It's imperative that we sort the elements first in case the DOM is
@@ -135,19 +134,25 @@
     // Now create the breakpoint object, which can be globally accessed by
     // using the selector $el.data('breakpointX')
     this.breakpointX = new BreakpointX(breakpointIndex, {
-      resizeThrottle: s.resizeThrottle
+      resizeThrottle: s.resizeThrottle,
     });
     this.$el.data('breakpointX', this.breakpointX);
 
     this.breakpointX
       .add('bigger', this.breakpointX.aliases, function(from, to) {
-        var abort = (s.downsize === 'never' && (self.largestLoaded === true || (to.maxWidth && self.largestLoaded > to.maxWidth)));
+        var abort =
+          s.downsize === 'never' &&
+          (self.largestLoaded === true ||
+            (to.maxWidth && self.largestLoaded > to.maxWidth));
         if (!abort) {
           self.changeHandler(to);
         }
       })
       .add('smaller', this.breakpointX.aliases, function(from, to) {
-        if (s.downsize === 'always' || s.downsize === 'loaded' && self.loaded[to.name]) {
+        if (
+          s.downsize === 'always' ||
+          (s.downsize === 'loaded' && self.loaded[to.name])
+        ) {
           self.changeHandler(to);
         }
       });
@@ -160,7 +165,7 @@
     this.changeHandler({
       name: this.breakpointX.current,
       minWidth: width[0],
-      maxWidth: width[1]
+      maxWidth: width[1],
     });
 
     /**
@@ -233,7 +238,7 @@
       bq *= 1;
 
       return aq - bq;
-    };
+    }
   };
 
   /**
@@ -243,13 +248,21 @@
    * @param int max One pixel less than the upper breakpoint.
    * @returns {string[]}
    */
-  function getMediaQueryPermutations(min, max) {
+  function getMediaQueryPermutations(breakpointDefinition) {
     var permutations = [];
-    if (max) {
-      permutations.push('max-width:' + (min - 1) + 'px');
-      permutations.push('(min-width:' + (min + 1) + 'px) and (max-width:' + max + 'px)');
+    if (breakpointDefinition.maxWidth) {
+      permutations.push(
+        'max-width:' + (breakpointDefinition.minWidth - 1) + 'px'
+      );
+      permutations.push(
+        '(min-width:' +
+          (breakpointDefinition.minWidth + 1) +
+          'px) and (max-width:' +
+          breakpointDefinition.maxWidth +
+          'px)'
+      );
     } else {
-      permutations.push('min-width:' + min + 'px');
+      permutations.push('min-width:' + breakpointDefinition.minWidth + 'px');
     }
     return permutations;
   }
@@ -257,10 +270,18 @@
   /**
    * Respond to entering into a breakpoint.
    *
-   * @param rangeDefinition
+   * @param object to
+   *   The breakpoint range definition that was moved (in)to.
    */
-  SmartImages.prototype.changeHandler = function(rangeDefinition) {
-    var names = getMediaQueryPermutations(rangeDefinition.minWidth, rangeDefinition.maxWidth),
+  SmartImages.prototype.changeHandler = function(to) {
+    if (!to) {
+      var range = this.breakpointX.value(this.breakpointX.current);
+      to = {
+        minWidth: range[0],
+        masWidth: range[1],
+      };
+    }
+    var names = getMediaQueryPermutations(to),
       name = null;
     for (var i in names) {
       if (this.srcMap[names[i]]) {
@@ -270,11 +291,13 @@
     }
 
     var src = this.srcMap[name] || '',
-      abort = this.settings.onBeforeChange && this.settings.onBeforeChange.call(this, name, src) === false;
+      abort =
+        this.settings.onBeforeChange &&
+        this.settings.onBeforeChange.call(this, name, src) === false;
     if (abort) {
       return;
     }
-    this.largestLoaded = rangeDefinition.maxWidth || true;
+    this.largestLoaded = to.maxWidth || true;
     this.loaded[name] = true;
     this.$img.attr('src', src);
     var cssClass = this.settings.dataPrefix + 'has-not-src';
@@ -294,22 +317,21 @@
 
   $.fn.smartImages = function(options, methodArgs) {
     return this.each(function() {
-      try {
-        var obj = $.data(this, 'smartImages');
-        // When method is passed as a string option, call it.
-        if (obj && typeof options === 'string' && typeof obj[options] === 'function') {
-          obj[options](methodArgs);
-        } else {
-          $.data(this, 'smartImages', new SmartImages(this, options));
-        }
-      } catch (e) {
-        console.log(e.name + ': ' + e.message);
+      var obj = $.data(this, 'smartImages');
+      // When method is passed as a string option, call it.
+      if (
+        obj &&
+        typeof options === 'string' &&
+        typeof obj[options] === 'function'
+      ) {
+        obj[options](methodArgs);
+      } else {
+        $.data(this, 'smartImages', new SmartImages(this, options));
       }
     });
   };
 
   $.fn.smartImages.defaults = {
-
     /**
      * Namespace for all data tags and css classes, e.g. 'si-'.
      */
@@ -390,7 +412,7 @@
      * @param string breakpoint name
      * @param string image src
      */
-    onAfterChange: null
+    onAfterChange: null,
   };
 
   /**
@@ -401,5 +423,4 @@
   $.fn.smartImages.version = function() {
     return '__version';
   };
-}));
-
+});
