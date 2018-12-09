@@ -128,6 +128,7 @@
         var mediaQuery = getMediaQueryFromEl(this);
         addBreakpointsToIndexByMediaQuery(mediaQuery);
         var src = $(this).attr('data-' + p + s.dataSrcSuffix);
+
         self.srcMap[mediaQuery.replace(/: /g, ':')] = src;
       });
 
