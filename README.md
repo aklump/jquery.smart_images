@@ -6,7 +6,7 @@
 
 Window width based image loading for responsive applications.
 
-**Visit <https://aklump.github.io/jquery.smart_images/> for full documentation.**
+**Visit <https://aklump.github.io/jquery.smart_docs/images/> for full documentation.**
 
 ## Quick Start
 
