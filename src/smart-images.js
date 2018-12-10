@@ -76,31 +76,25 @@
    */
   SmartImages.prototype.init = function() {
     /**
-     * Maps the aliases to the image srcs
+     * Maps the media queries to the image src
      * @type {{}}
      */
     this.srcMap = {};
 
     /**
-     * Stores which breakpoint aliases have been loaded.
+     * Stores the image widths that have been loaded.
      * @type {{}}
      */
-    this.loaded = {};
+    this.loaded = [];
 
     /**
-     * Holds the integer value of the largest pixels loaded or true, if the
-     * largest.
+     * Holds the width of the image active in the src tag.
      * @type {null}
      */
-    this.largestLoaded = null;
+    this.srcWidth = null;
 
-    /**
-     * An indexed array of integers holding the single breakpoint values.
-     * @type {Array}
-     */
-    var breakpointIndex = [];
-
-    var $el = this.$el,
+    var self = this,
+      $el = this.$el,
       s = this.settings,
       srcSelector =
         s.srcSelector || '[data-' + s.dataPrefix + s.dataMediaSuffix + ']',
@@ -110,201 +104,86 @@
       throw new Error('No elements found matching: ' + srcSelector);
     }
 
-    var self = this,
-      p = this.settings.dataPrefix;
+    var p = this.settings.dataPrefix;
 
-    // Acquire the data value from all span elements.
-    $imageSpans
-
-      // These serve as data only, and should not display.
-      .hide()
-
-      // It's imperative that we sort the elements first in case the DOM is
-      // dirty.
-      .sort(sortElementsByMediaQuery)
-
-      // Now we'll go through and setup our indexes based on queries.
-      .each(function() {
-        var mediaQuery = getMediaQueryFromEl(this);
-        addBreakpointsToIndexByMediaQuery(mediaQuery);
-        var src = $(this).attr('data-' + p + s.dataSrcSuffix);
-
-        self.srcMap[mediaQuery.replace(/: /g, ':')] = src;
-      });
-
-    // Now create the breakpoint object, which can be globally accessed by
-    // using the selector $el.data('breakpointX')
-    this.breakpointX = new BreakpointX(breakpointIndex, {
+    this.breakpointX = new BreakpointX({
       resizeThrottle: s.resizeThrottle,
     });
     this.$el.data('breakpointX', this.breakpointX);
 
+    self.srcMap = {};
+    $imageSpans
+
+    // These serve as data only, and should not display.
+      .hide()
+
+      // Now we'll go through and setup our indexes based on queries.
+      .each(function() {
+        // We cannot use .data here, because the attr may have been altered
+        // AFTER data was read in.  So we must use .attr instead
+        // 2017-03-29T21:19, aklump.
+        var mediaQuery = $(this).attr('data-' + s.dataPrefix + s.dataMediaSuffix) || '';
+        self.breakpointX.addSegmentByMedia(mediaQuery);
+        var src = $(this).attr('data-' + p + s.dataSrcSuffix);
+        self.srcMap[mediaQuery] = src;
+      });
+
     this.breakpointX
-      .add('bigger', this.breakpointX.aliases, function(from, to) {
-        var abort =
-          s.downsize === 'never' &&
-          (self.largestLoaded === true ||
-            (to.maxWidth && self.largestLoaded > to.maxWidth));
-        if (!abort) {
-          self.changeHandler(to);
-        }
-      })
-      .add('smaller', this.breakpointX.aliases, function(from, to) {
+      .addCrossAction(function(segment, direction) {
+        var largestWidthLoaded = self.loaded.length
+          ? Math.max.apply(Math, self.loaded)
+          : null,
+          widthNeeded = segment.imageWidth,
+          apply = largestWidthLoaded === null;
         if (
-          s.downsize === 'always' ||
-          (s.downsize === 'loaded' && self.loaded[to.name])
+          direction === 'bigger' &&
+          (widthNeeded > largestWidthLoaded || widthNeeded > self.srcWidth)
         ) {
-          self.changeHandler(to);
+          apply = true;
+        } else if (direction === 'smaller') {
+          apply = true;
+          switch (s.downsize) {
+            case 'never':
+              apply = false;
+              break;
+            case 'loaded':
+              apply = self.loaded.indexOf(segment.imageWidth) >= 0;
+              break;
+          }
         }
+        apply && self.changeHandler(segment);
       });
 
     if (this.settings.onInit) {
-      this.settings.onInit.call(this);
+      var segment = this.breakpointX.getSegment(s.initialWidth);
+      this.settings.onInit.call(this, segment);
     }
-
-    var width = this.breakpointX.value(this.breakpointX.current);
-    this.changeHandler({
-      name: this.breakpointX.current,
-      minWidth: width[0],
-      maxWidth: width[1],
-    });
-
-    /**
-     * Return an image elements's media query from it's data attribute.
-     *
-     * This is not the <img/> tag, but (probably) the <span> tag.
-     *s
-     * @param el
-     *   An element or jQuery object representing an image for a given
-     *   breakpoint.
-     * @returns {string}
-     */
-    function getMediaQueryFromEl(el) {
-      // We cannot use .data here, because the attr may have been altered
-      // AFTER data was read in.  So we must use .attr instead
-      // 2017-03-29T21:19, aklump.
-      return $(el).attr('data-' + s.dataPrefix + s.dataMediaSuffix) || '';
-    }
-
-    /**
-     * Get the min and max valus from a media query string.
-     *
-     * @param mediaQuery
-     *
-     * @returns {[]}
-     *   - 0 int The minumum value or null.
-     *   - 1 int The maximum value or Infinity.
-     */
-    function parseMediaQuery(mediaQuery) {
-      var min = mediaQuery.match(/min\-width:\s*(\d+)\s*px/),
-        max = mediaQuery.match(/max\-width:\s*(\d+)\s*px/);
-
-      return [min ? min[1] * 1 : null, max ? max[1] * 1 : null];
-    }
-
-    /**
-     * Parse a media query and update our different indexes.
-     * @param breakpointIndex
-     * @param mediaQuery
-     *
-     * @see breakpointIndex
-     */
-    function addBreakpointsToIndexByMediaQuery(mediaQuery) {
-      var range = parseMediaQuery(mediaQuery),
-        min = range[0] || 0,
-        max = range[1];
-      if (breakpointIndex.length === 0) {
-        breakpointIndex.push(min);
-      }
-      if (max) {
-        breakpointIndex.push(max + 1);
-      }
-    }
-
-    /**
-     * Sorting callback for sorting by media query.
-     *
-     * This will put items in the low to high based on media query.
-     *
-     * @param a
-     * @param b
-     * @returns {number}
-     */
-    function sortElementsByMediaQuery(a, b) {
-      var aq = parseMediaQuery(getMediaQueryFromEl(a));
-      aq = aq[1] ? aq[1] : aq[0];
-      aq *= 1;
-      var bq = parseMediaQuery(getMediaQueryFromEl(b));
-      bq = bq[1] ? bq[1] : bq[0];
-      bq *= 1;
-
-      return aq - bq;
-    }
+    this.breakpointX.triggerActions(s.initialWidth);
   };
 
   /**
-   * Return all possible media queries for a min/max range.
-   *
-   * @param int min The lower breakpoint
-   * @param int max One pixel less than the upper breakpoint.
-   * @returns {string[]}
-   */
-  function getMediaQueryPermutations(breakpointDefinition) {
-    var permutations = [];
-    if (breakpointDefinition.maxWidth) {
-      permutations.push(
-        'max-width:' + (breakpointDefinition.minWidth - 1) + 'px'
-      );
-      permutations.push(
-        '(min-width:' +
-          (breakpointDefinition.minWidth + 1) +
-          'px) and (max-width:' +
-          breakpointDefinition.maxWidth +
-          'px)'
-      );
-    } else {
-      permutations.push('min-width:' + breakpointDefinition.minWidth + 'px');
-    }
-    return permutations;
-  }
-
-  /**
-   * Respond to entering into a breakpoint.
+   * Respond to entering into a segment.
    *
    * @param object to
-   *   The breakpoint range definition that was moved (in)to.
+   *   The breakpoint segment that was entered.
    */
-  SmartImages.prototype.changeHandler = function(to) {
-    if (!to) {
-      var range = this.breakpointX.value(this.breakpointX.current);
-      to = {
-        minWidth: range[0],
-        masWidth: range[1],
-      };
-    }
-    var names = getMediaQueryPermutations(to),
-      name = null;
-    for (var i in names) {
-      if (this.srcMap[names[i]]) {
-        name = names[i];
-        break;
-      }
-    }
-
-    var src = this.srcMap[name] || '',
+  SmartImages.prototype.changeHandler = function(segment) {
+    segment = segment || this.breakpointX.getSegmentByWindow();
+    var self = this,
+      src = self.srcMap[segment.name],
       abort =
-        this.settings.onBeforeChange &&
-        this.settings.onBeforeChange.call(this, name, src) === false;
+        self.settings.onBeforeChange &&
+        self.settings.onBeforeChange.call(self, segment, src) === false;
     if (abort) {
       return;
     }
-    this.largestLoaded = to.maxWidth || true;
-    this.loaded[name] = true;
-    this.$img.attr('src', src);
-    var cssClass = this.settings.dataPrefix + 'has-not-src';
-    src ? this.$img.removeClass(cssClass) : this.$img.addClass(cssClass);
-    if (this.settings.onAfterChange) {
-      this.settings.onAfterChange.call(this, name, src);
+    self.loaded.push(segment.imageWidth);
+    self.srcWidth = segment.imageWidth;
+    self.$img.attr('src', src);
+    var cssClass = self.settings.dataPrefix + 'has-not-src';
+    src ? self.$img.removeClass(cssClass) : self.$img.addClass(cssClass);
+    if (self.settings.onAfterChange) {
+      self.settings.onAfterChange.call(self, segment, src);
     }
   };
 
@@ -358,7 +237,7 @@
      * How many milliseconds to wait to read the window width after a resize
      * event.
      */
-    resizeThrottle: 300,
+    resizeThrottle: 200,
 
     /**
      * This setting answers the question of loading smaller images when the
@@ -393,6 +272,9 @@
 
     /**
      * Callback fired on initializing before loading the first images.
+     *
+     * @param object segment
+     *   This the segment representing the initial width.
      */
     onInit: null,
 
@@ -402,7 +284,7 @@
      *
      * Return false to prevent the image src swap.
      *
-     * @param string breakpoint name
+     * @param object segment
      * @param string image src
      */
     onBeforeChange: null,
@@ -410,10 +292,17 @@
     /**
      * Callback just after a src change has occurred.
      *
-     * @param string breakpoint name
+     * @param object segment
      * @param string image src
      */
     onAfterChange: null,
+
+    /**
+     * A preset value to use instead the window width for onload handlers.
+     *
+     * @var int|null
+     */
+    initialWidth: null,
   };
 
   /**

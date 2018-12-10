@@ -16,6 +16,41 @@
 // $el.smartImages('changeHandler', { minWidth: 960, maxWidth: 1079 });
 // assert.notOk($img.hasClass('has-not-src')); });
 
+QUnit.test('Assert BreakpointX and SmartImage objects attach to element and can be destroyed.', function(assert) {
+  var $el = $(markupDefault);
+  $el.smartImages();
+  assert.ok($el.data('smartImages'));
+  assert.ok($el.data('breakpointX'));
+  $el.smartImages('destroy');
+  assert.notOk($el.data('smartImages'));
+  assert.notOk($el.data('breakpointX'));
+});
+
+QUnit.test('Test a no mobile sequence using "always" initial small', function(assert) {
+  var $el = $(markupNoMobile),
+    $img = $el.find('img'),
+    mobile = 600,
+    medium = 800,
+    large = 980;
+  var bpx = $el.smartImages({
+    downsize: 'loaded',
+    initialWidth: mobile,
+    resizeThrottle: 0
+  }).data('breakpointX');
+  assert.notOk($img.attr('src'));
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(small);
+  assert.notOk($img.attr('src'));
+});
 
 QUnit.test('Test a sequence using "loaded" initial small.', function(assert) {
   var $el = $(markupDefault),
@@ -401,16 +436,6 @@ QUnit.test(
   }
 );
 
-QUnit.test(
-  'Assert BreakpointX and SmartImage objects attach to element.',
-  function(assert) {
-    var $el = $(markupDefault);
-    $el.smartImages();
-    assert.ok($el.data('smartImages'));
-    assert.ok($el.data('breakpointX'));
-  }
-);
-
 QUnit.test('Able to detect version.', function(assert) {
   assert.ok($.fn.smartImages.version, 'Version is not empty.');
 });
@@ -438,4 +463,15 @@ var markupDefault =
   '    <span data-si-srcset="medium.jpg" data-si-media="(min-width:768px) and (max-width:959px)"></span>\n' +
   '    <span data-si-srcset="large.jpg" data-si-media="(min-width:960px) and (max-width:1079px)"></span>\n' +
   '    <span data-si-srcset="jumbo.jpg" data-si-media="min-width:1080px"></span><img/>\n' +
+  '  </div>';
+
+/**
+ * HTML markup to use in the tests for no mobile
+ *
+ * @type {string}
+ */
+var markupNoMobile =
+  '<div>\n' +
+  '    <span data-si-srcset="medium.jpg" data-si-media="(min-width:768px) and (max-width:959px)"></span>\n' +
+  '    <span data-si-srcset="large.jpg" data-si-media="min-width:960px"></span><img/>\n' +
   '  </div>';
