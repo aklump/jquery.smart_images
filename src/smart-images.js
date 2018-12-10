@@ -170,18 +170,20 @@
   SmartImages.prototype.changeHandler = function(segment) {
     segment = segment || this.breakpointX.getSegmentByWindow();
     var self = this,
-      src = self.srcMap[segment.name],
-      abort =
+      src = self.srcMap[segment.name] || '',
+      userCancelled =
         self.settings.onBeforeChange &&
         self.settings.onBeforeChange.call(self, segment, src) === false;
-    if (abort) {
+    if (userCancelled) {
       return;
     }
-    self.loaded.push(segment.imageWidth);
-    self.srcWidth = segment.imageWidth;
+    var noImageClass = self.settings.dataPrefix + 'has-not-src';
     self.$img.attr('src', src);
-    var cssClass = self.settings.dataPrefix + 'has-not-src';
-    src ? self.$img.removeClass(cssClass) : self.$img.addClass(cssClass);
+    self.srcWidth = src ? segment.imageWidth : null;
+    if (src) {
+      self.loaded.push(segment.imageWidth);
+    }
+    src ? self.$img.removeClass(noImageClass) : self.$img.addClass(noImageClass);
     if (self.settings.onAfterChange) {
       self.settings.onAfterChange.call(self, segment, src);
     }

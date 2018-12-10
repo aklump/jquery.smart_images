@@ -29,27 +29,39 @@ QUnit.test('Assert BreakpointX and SmartImage objects attach to element and can 
 QUnit.test('Test a no mobile sequence using "always" initial small', function(assert) {
   var $el = $(markupNoMobile),
     $img = $el.find('img'),
-    mobile = 600,
-    medium = 800,
-    large = 980;
+    small = 300,
+    large = 500,
+    jumbo = 800;
   var bpx = $el.smartImages({
-    downsize: 'loaded',
-    initialWidth: mobile,
+    downsize: 'always',
+    initialWidth: small,
     resizeThrottle: 0
   }).data('breakpointX');
   assert.notOk($img.attr('src'));
 
-  bpx.onWindowResize(medium);
-  assert.strictEqual($img.attr('src'), 'medium.jpg');
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'images/large.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'images/jumbo.jpg');
 
   bpx.onWindowResize(large);
-  assert.strictEqual($img.attr('src'), 'large.jpg');
-
-  bpx.onWindowResize(medium);
-  assert.strictEqual($img.attr('src'), 'medium.jpg');
+  assert.strictEqual($img.attr('src'), 'images/large.jpg');
 
   bpx.onWindowResize(small);
   assert.notOk($img.attr('src'));
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'images/large.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'images/jumbo.jpg');
+
+  bpx.onWindowResize(small);
+  assert.notOk($img.attr('src'));
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'images/large.jpg');
 });
 
 QUnit.test('Test a sequence using "loaded" initial small.', function(assert) {
@@ -470,8 +482,8 @@ var markupDefault =
  *
  * @type {string}
  */
-var markupNoMobile =
-  '<div>\n' +
-  '    <span data-si-srcset="medium.jpg" data-si-media="(min-width:768px) and (max-width:959px)"></span>\n' +
-  '    <span data-si-srcset="large.jpg" data-si-media="min-width:960px"></span><img/>\n' +
+var markupNoMobile = '<div class="smart-image">\n' +
+  '    <span data-si-srcset="images/large.jpg" data-si-media="(min-width:480px) and (max-width: 767px)"></span>\n' +
+  '    <span data-si-srcset="images/jumbo.jpg" data-si-media="(min-width:768px)"></span>\n' +
+  '    <img/>\n' +
   '  </div>';
