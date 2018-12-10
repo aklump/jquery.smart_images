@@ -1,9 +1,10 @@
-demo/jquery.smart_images.min.js
+docs/jquery.smart_images.min.js
 .web_package/*
 !.web_package/config
 !.web_package/hooks
 !.web_package/composer.json
 !.web_package/functions.php
 node_modules
+!docs/node_modules
 documentation/core
 /resources
