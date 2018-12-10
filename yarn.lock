@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@aklump/breakpointx@>=0.4.14":
-  version "0.4.14"
-  resolved "https://registry.yarnpkg.com/@aklump/breakpointx/-/breakpointx-0.4.14.tgz#a5812fa6123b1cc44fa7baf7e38bb01efa6f3357"
-  integrity sha512-rUs+0/QpGD6RZqxEeYA46xSUu561Z4wcPoUvjxMBjXyMcT6mh/MbaYZfB1ELyNr10PdRz5gXwgOP83OxBIkN4A==
+"@aklump/breakpointx@>=0.6.6":
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/@aklump/breakpointx/-/breakpointx-0.6.6.tgz#45948ed6852aee8ace757d99d8e921e8ff57813c"
+  integrity sha512-Zjz0GPNsT9HhbuceJV91UPxG9nvFO6gYbzOjnKB70RW/cm14cBlC5qsvdmUEJGXo8+2TQcr1/0t5b3eKeFaMzg==
 
 anymatch@^2.0.0:
   version "2.0.0"

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@aklump/breakpointx@>=0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@aklump/breakpointx/-/breakpointx-0.6.5.tgz#e4a7f2bb283a2f1898798490ea0f1645c26c55f5"
-  integrity sha512-P/Pkr3OdmpW4TD/M8xssclROqNfa/vTCkHzceupqCVg/IR6MYZNYBSZOmyxj3ADHHuU+GQEh93vL6cFOWsqrIA==
+"@aklump/breakpointx@>=0.6.6":
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/@aklump/breakpointx/-/breakpointx-0.6.6.tgz#45948ed6852aee8ace757d99d8e921e8ff57813c"
+  integrity sha512-Zjz0GPNsT9HhbuceJV91UPxG9nvFO6gYbzOjnKB70RW/cm14cBlC5qsvdmUEJGXo8+2TQcr1/0t5b3eKeFaMzg==
 
 jquery@>=1.12:
   version "3.3.1"

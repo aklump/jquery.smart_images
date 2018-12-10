@@ -6,3 +6,4 @@ demo/jquery.smart_images.min.js
 !.web_package/functions.php
 node_modules
 documentation/core
+/resources

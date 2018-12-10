@@ -33,10 +33,6 @@
             }
           })
           .data('breakpointX')
-          .renameSegment(400, 'small')
-          .renameSegment(600, 'medium')
-          .renameSegment(800, 'large')
-          .renameSegment(1000, 'jumbo')
           .addCrossAction(function(segment) {
             $('.js-segment-name span').html(segment.name);
           })
@@ -82,10 +78,8 @@
   <hr/>
 
   <h2>Example</h2>
-
-  <h4 class="js-segment-name">data-si-media: <span></span></h4>
-
-  <h4>downsize = <code>always</code></h4>
+  <h3 class="js-segment-name">data-si-media: <span></span></h3>
+  <h3>downsize = <code>always</code></h3>
   <div class="always">
     <span data-si-srcset="images/small.jpg" data-si-media="(max-width:400px)"></span>
     <span data-si-srcset="images/medium.jpg" data-si-media="(min-width:401px) and (max-width: 600px)"></span>
@@ -197,7 +191,8 @@ $('document').ready(function () {
 
   <h2>Breakpoint X</h2>
 
-  <p>You can obtain a Breakpoint X object by doing something like the following.  The example shows how you might rename the segments, add an extra breakpoint cross action, and determine the largest image width.</p>
+  <p>You can obtain a Breakpoint X object by doing something like the following. The example shows how you might add an extra breakpoint cross action, and determine the largest image width.
+    <strong>Do not use <code>.renameSegments</code> as it will break this plugin.</strong></p>
 
   <pre>
 var bpx = $('.smart-images')
@@ -213,10 +208,6 @@ var bpx = $('.smart-images')
     }
   })
   .data('breakpointX')
-  .renameSegment(400, 'small')
-  .renameSegment(600, 'medium')
-  .renameSegment(800, 'large')
-  .renameSegment(1000, 'jumbo')
   .addCrossAction(function(segment) {
     // Do something.
   })

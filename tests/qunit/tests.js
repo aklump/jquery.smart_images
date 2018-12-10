@@ -6,60 +6,410 @@
  * @{
  */
 
-QUnit.test('Callback onInit is called when provided.', function(assert) {
-  var done = assert.async();
+// QUnit.test('Applying change to breakpoint without image adds class
+// has-not-src to img', function(assert) { var $el = $(markupSpanOrderIsDirty),
+// $img = $el.find('img'); $el.smartImages({ dataPrefix: '', dataSrcSuffix:
+// 'no-retina-src', srcSelector: 'span' });
+// console.log($el.data('breakpointX')); $img.removeClass('has-not-src');
+// assert.notOk($img.hasClass('has-not-src')); $el.smartImages('changeHandler',
+// { minWidth: 0, maxWidth: 767 }); assert.ok($img.hasClass('has-not-src'));
+// $el.smartImages('changeHandler', { minWidth: 960, maxWidth: 1079 });
+// assert.notOk($img.hasClass('has-not-src')); });
+
+
+QUnit.test('Test a sequence using "loaded" initial small.', function(assert) {
+  var $el = $(markupDefault),
+    $img = $el.find('img'),
+    small = 200,
+    medium = 800,
+    large = 980,
+    jumbo = 1200;
+  var bpx = $el.smartImages({
+    downsize: 'loaded',
+    initialWidth: small,
+    resizeThrottle: 0
+  }).data('breakpointX');
+  assert.strictEqual($img.attr('src'), 'small.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(small);
+  assert.strictEqual($img.attr('src'), 'small.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+});
+
+QUnit.test('Test a sequence using "loaded" initial jumbo.', function(assert) {
+  var $el = $(markupDefault),
+    $img = $el.find('img'),
+    small = 200,
+    medium = 800,
+    large = 980,
+    jumbo = 1200;
+  var bpx = $el.smartImages({
+    downsize: 'loaded',
+    initialWidth: jumbo,
+    resizeThrottle: 0
+  }).data('breakpointX');
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(small);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+});
+
+QUnit.test('Test a sequence using "never" initial small.', function(assert) {
+  var $el = $(markupDefault),
+    $img = $el.find('img'),
+    small = 200,
+    medium = 800,
+    large = 980,
+    jumbo = 1200;
+  var bpx = $el.smartImages({
+    downsize: 'never',
+    initialWidth: small,
+    resizeThrottle: 0
+  }).data('breakpointX');
+  assert.strictEqual($img.attr('src'), 'small.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(small);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+});
+
+QUnit.test('Test a sequence using "never" initial jumbo.', function(assert) {
+  var $el = $(markupDefault),
+    $img = $el.find('img'),
+    small = 200,
+    medium = 800,
+    large = 980,
+    jumbo = 1200;
+  var bpx = $el.smartImages({
+    downsize: 'never',
+    initialWidth: jumbo,
+    resizeThrottle: 0
+  }).data('breakpointX');
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(small);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+});
+
+QUnit.test('Test a sequence using "always" initial small.', function(assert) {
+  var $el = $(markupDefault),
+    $img = $el.find('img'),
+    small = 200,
+    medium = 800,
+    large = 980,
+    jumbo = 1200;
+  var bpx = $el.smartImages({
+    downsize: 'always',
+    initialWidth: small,
+    resizeThrottle: 0
+  }).data('breakpointX');
+  assert.strictEqual($img.attr('src'), 'small.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(small);
+  assert.strictEqual($img.attr('src'), 'small.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+});
+
+QUnit.test('Test a sequence using "always" initial jumbo.', function(assert) {
+  var $el = $(markupDefault),
+    $img = $el.find('img'),
+    small = 200,
+    medium = 800,
+    large = 980,
+    jumbo = 1200;
+  var bpx = $el.smartImages({
+    downsize: 'always',
+    initialWidth: jumbo,
+    resizeThrottle: 0
+  }).data('breakpointX');
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(small);
+  assert.strictEqual($img.attr('src'), 'small.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+
+  bpx.onWindowResize(large);
+  assert.strictEqual($img.attr('src'), 'large.jpg');
+
+  bpx.onWindowResize(jumbo);
+  assert.strictEqual($img.attr('src'), 'jumbo.jpg');
+
+  bpx.onWindowResize(medium);
+  assert.strictEqual($img.attr('src'), 'medium.jpg');
+});
+
+QUnit.test(
+  'Calling with string method name triggers method and updates src.',
+  function(assert) {
+    var beforeWasCalled = assert.async(2);
+    var $el = $(markupDefault),
+      $img = $el.find('img');
+    $el.smartImages({
+      onBeforeChange: function() {
+        assert.ok(true);
+        beforeWasCalled();
+      },
+    });
+    $img.removeAttr('src');
+    $el.smartImages('changeHandler');
+    assert.ok($img.attr('src'));
+  }
+);
+
+QUnit.test(
+  'Return false from onBeforeChange prevents img src from loading.',
+  function(assert) {
+    var $el = $(markupDefault);
+    assert.notOk($el.find('img').attr('src'));
+    $el.smartImages({
+      onBeforeChange: function() {
+        return false;
+      },
+    });
+    $el.smartImages('changeHandler');
+    assert.notOk($el.find('img').attr('src'));
+  }
+);
+
+QUnit.test('img.src is empty to start and still empty onBeforeChange', function(
+  assert
+) {
+  var before = assert.async(1);
+  var $el = $(markupDefault);
+  assert.notOk($el.find('img').attr('src'));
+  $el.smartImages({
+    onBeforeChange: function() {
+      assert.notOk($el.find('img').attr('src'));
+      before();
+    },
+  });
+});
+
+QUnit.test(
+  'img.src is empty then matches the src passed to onAfterChange',
+  function(assert) {
+    var done = assert.async(1);
+    var $el = $(markupDefault);
+    assert.notOk($el.find('img').attr('src'));
+    $el.smartImages({
+      onAfterChange: function(bp_name, src) {
+        assert.equal($el.find('img').attr('src'), src);
+        done();
+      },
+    });
+  }
+);
+
+QUnit.test('Callback onAfterChange is called once when provided.', function(
+  assert
+) {
+  var done = assert.async(1);
+  var $el = $(markupDefault);
+  $el.smartImages({
+    onAfterChange: function(bp_name, src) {
+      assert.ok(bp_name);
+      assert.ok(src);
+      assert.ok(true);
+      done();
+    },
+  });
+});
+
+QUnit.test('Callback onBeforeChange is called once when provided.', function(
+  assert
+) {
+  var done = assert.async(1);
+  var $el = $(markupDefault);
+  $el.smartImages({
+    onBeforeChange: function(bp_name, src) {
+      assert.ok(bp_name);
+      assert.ok(src);
+      assert.ok(true);
+      done();
+    },
+  });
+});
+
+QUnit.test('Callback onInit is called once when provided.', function(assert) {
+  var done = assert.async(1);
   var $el = $(markupDefault);
   $el.smartImages({
     onInit: function() {
-      assert.ok(true, 'onInit was called');
+      assert.ok(true);
       done();
-    }
+    },
   });
 });
 
 QUnit.test('All span elements are hidden on init.', function(assert) {
   var $el = $(markupDefault);
   $el.smartImages();
-  assert.equal($el.find('span').eq(0).attr('style'), 'display: none;');
-  assert.equal($el.find('span').eq(1).attr('style'), 'display: none;');
-  assert.equal($el.find('span').eq(2).attr('style'), 'display: none;');
-  assert.equal($el.find('span').eq(3).attr('style'), 'display: none;');
+  assert.equal(
+    $el
+      .find('span')
+      .eq(0)
+      .attr('style'),
+    'display: none;'
+  );
+  assert.equal(
+    $el
+      .find('span')
+      .eq(1)
+      .attr('style'),
+    'display: none;'
+  );
+  assert.equal(
+    $el
+      .find('span')
+      .eq(2)
+      .attr('style'),
+    'display: none;'
+  );
+  assert.equal(
+    $el
+      .find('span')
+      .eq(3)
+      .attr('style'),
+    'display: none;'
+  );
 });
 
+QUnit.test(
+  'Assert data-media converts to breakpoints correctly for normal use.',
+  function(assert) {
+    var $el = $(markupDefault);
+    $el.smartImages();
+    var bpx = $el.data('breakpointX');
+    assert.equal(bpx.segmentNames.length, 4);
+    assert.equal(bpx.segmentNames[0], 'max-width:767px');
+    assert.equal(bpx.segmentNames[1], '(min-width:768px) and (max-width:959px)');
+    assert.equal(bpx.segmentNames[2], '(min-width:960px) and (max-width:1079px)');
+    assert.equal(bpx.segmentNames[3], 'min-width:1080px');
+  }
+);
 
-QUnit.test('Assert data-media converts to breakpoints correctly for normal use.', function(assert) {
-  var $el = $(markupDefault);
-  $el.smartImages();
-  var bp = $el.data('breakpointX');
-  var aliases = bp.aliases;
-  assert.equal(aliases.length, 4);
-  assert.equal(aliases[0], 'max-width:767px');
-  assert.equal(aliases[1], '(min-width:768px) and (max-width:959px)');
-  assert.equal(aliases[2], '(min-width:960px) and (max-width:1079px)');
-  assert.equal(aliases[3], 'min-width:1080px');
-});
+QUnit.test(
+  'Assert data-media converts to breakpoints correctly when no mobile.',
+  function(assert) {
+    var $el = $(markupSpanOrderIsDirty);
+    $el.smartImages({
+      dataPrefix: '',
+      dataSrcSuffix: 'no-retina-src',
+      srcSelector: 'span',
+    });
+    var bpx = $el.data('breakpointX');
+    assert.equal(bpx.segmentNames.length, 4);
+    assert.equal(bpx.segmentNames[0], '0-767');
+    assert.equal(bpx.segmentNames[1], '(min-width:768px) and (max-width:959px)');
+    assert.equal(bpx.segmentNames[2], '(min-width:960px) and (max-width:1079px)');
+    assert.equal(bpx.segmentNames[3], 'min-width:1080px');
+  }
+);
 
-QUnit.test('Assert data-media converts to breakpoints correctly when no mobile.', function(assert) {
-  var $el = $(markupSpanOrderIsDirty);
-  $el.smartImages({
-    dataPrefix: '',
-    dataSrcSuffix: 'no-retina-src',
-    srcSelector: 'span'
-  });
-  var bp = $el.data('breakpointX');
-  var aliases = bp.aliases;
-  assert.equal(aliases.length, 3);
-  assert.equal(aliases[0], '(min-width:768px) and (max-width:959px)');
-  assert.equal(aliases[1], '(min-width:960px) and (max-width:1079px)');
-  assert.equal(aliases[2], 'min-width:1080px');
-});
-
-QUnit.test('Assert BreakpointX and SmartImage objects attach to element.', function(assert) {
-  var $el = $(markupDefault);
-  $el.smartImages();
-  assert.ok($el.data('smartImages'));
-  assert.ok($el.data('breakpointX'));
-});
+QUnit.test(
+  'Assert BreakpointX and SmartImage objects attach to element.',
+  function(assert) {
+    var $el = $(markupDefault);
+    $el.smartImages();
+    assert.ok($el.data('smartImages'));
+    assert.ok($el.data('breakpointX'));
+  }
+);
 
 QUnit.test('Able to detect version.', function(assert) {
   assert.ok($.fn.smartImages.version, 'Version is not empty.');
@@ -70,21 +420,22 @@ QUnit.test('Able to detect version.', function(assert) {
  *
  * @type {string}
  */
-var markupSpanOrderIsDirty = '<div>\n' +
+var markupSpanOrderIsDirty =
+  '<div>\n' +
   '    <span data-media="(min-width:960px) and (max-width:1079px)"></span>\n' +
   '    <span data-media="(min-width:768px) and (max-width:959px)"></span>\n' +
   '    <span data-media="min-width:1080px"></span><img/>\n' +
   '  </div>';
-
 
 /**
  * HTML markup to use in the tests.
  *
  * @type {string}
  */
-var markupDefault = '<div>\n' +
-  '    <span data-si-srcset="image.jpg" data-si-media="max-width:767px"></span>\n' +
-  '    <span data-si-srcset="image.jpg" data-si-media="(min-width:768px) and (max-width:959px)"></span>\n' +
-  '    <span data-si-srcset="image.jpg" data-si-media="(min-width:960px) and (max-width:1079px)"></span>\n' +
-  '    <span data-si-srcset="image.jpg" data-si-media="min-width:1080px"></span><img/>\n' +
+var markupDefault =
+  '<div>\n' +
+  '    <span data-si-srcset="small.jpg" data-si-media="max-width:767px"></span>\n' +
+  '    <span data-si-srcset="medium.jpg" data-si-media="(min-width:768px) and (max-width:959px)"></span>\n' +
+  '    <span data-si-srcset="large.jpg" data-si-media="(min-width:960px) and (max-width:1079px)"></span>\n' +
+  '    <span data-si-srcset="jumbo.jpg" data-si-media="min-width:1080px"></span><img/>\n' +
   '  </div>';
