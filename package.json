@@ -1,24 +1,24 @@
 {
-    "name": "@aklump/smart-images",
+    "name": "@aklump\/smart-images",
     "title": "Smart Images",
     "description": "Window width-based image loading for responsive applications.",
-    "version": "0.2.4",
-    "main": "./dist/smart-images.js",
+    "version": "0.3.0",
+    "main": ".\/dist\/smart-images.js",
     "license": "MIT OR GPL-3.0",
     "author": "Aaron Klump <sourcecode@intheloftstudios.com>",
-    "homepage": "http://www.intheloftstudios.com/packages/js/jquery.smart_images",
+    "homepage": "http:\/\/www.intheloftstudios.com\/packages\/js\/jquery.smart_images",
     "devDependencies": {
         "prettier": "1.15.3",
         "qunit": "^2.8.0",
         "uglify-js": "^3.4.9"
     },
     "dependencies": {
-        "@aklump/breakpointx": ">=0.6.6",
+        "@aklump\/breakpointx": ">=0.6.6",
         "jquery": ">=1.12"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com:aklump/jquery.smart_images.git"
+        "url": "git+https:\/\/github.com:aklump\/jquery.smart_images.git"
     },
     "keywords": [
         "jquery plugin",
@@ -29,9 +29,9 @@
         "jquery"
     ],
     "bugs": {
-        "url": "https://github.com/aklump/jquery.smart_images/issues"
+        "url": "https:\/\/github.com\/aklump\/jquery.smart_images\/issues"
     },
     "bin": {
-        "smart-images-resizer": "./resizer.sh"
+        "smart-images-resizer": ".\/resizer.sh"
     }
 }
