@@ -114,7 +114,7 @@
     self.srcMap = {};
     $imageSpans
 
-    // These serve as data only, and should not display.
+      // These serve as data only, and should not display.
       .hide()
 
       // Now we'll go through and setup our indexes based on queries.
@@ -122,37 +122,37 @@
         // We cannot use .data here, because the attr may have been altered
         // AFTER data was read in.  So we must use .attr instead
         // 2017-03-29T21:19, aklump.
-        var mediaQuery = $(this).attr('data-' + s.dataPrefix + s.dataMediaSuffix) || '';
+        var mediaQuery =
+          $(this).attr('data-' + s.dataPrefix + s.dataMediaSuffix) || '';
         self.breakpointX.addSegmentByMedia(mediaQuery);
         var src = $(this).attr('data-' + p + s.dataSrcSuffix);
         self.srcMap[mediaQuery] = src;
       });
 
-    this.breakpointX
-      .addCrossAction(function(segment, direction) {
-        var largestWidthLoaded = self.loaded.length
+    this.breakpointX.addCrossAction(function(segment, direction) {
+      var largestWidthLoaded = self.loaded.length
           ? Math.max.apply(Math, self.loaded)
           : null,
-          widthNeeded = segment.imageWidth,
-          apply = largestWidthLoaded === null;
-        if (
-          direction === 'bigger' &&
-          (widthNeeded > largestWidthLoaded || widthNeeded > self.srcWidth)
-        ) {
-          apply = true;
-        } else if (direction === 'smaller') {
-          apply = true;
-          switch (s.downsize) {
-            case 'never':
-              apply = false;
-              break;
-            case 'loaded':
-              apply = self.loaded.indexOf(segment.imageWidth) >= 0;
-              break;
-          }
+        widthNeeded = segment.imageWidth,
+        apply = largestWidthLoaded === null;
+      if (
+        direction === 'bigger' &&
+        (widthNeeded > largestWidthLoaded || widthNeeded > self.srcWidth)
+      ) {
+        apply = true;
+      } else if (direction === 'smaller') {
+        apply = true;
+        switch (s.downsize) {
+          case 'never':
+            apply = false;
+            break;
+          case 'loaded':
+            apply = self.loaded.indexOf(segment.imageWidth) >= 0;
+            break;
         }
-        apply && self.changeHandler(segment);
-      });
+      }
+      apply && self.changeHandler(segment);
+    });
 
     if (this.settings.onInit) {
       var segment = this.breakpointX.getSegment(s.initialWidth);
@@ -183,7 +183,9 @@
     if (src) {
       self.loaded.push(segment.imageWidth);
     }
-    src ? self.$img.removeClass(noImageClass) : self.$img.addClass(noImageClass);
+    src
+      ? self.$img.removeClass(noImageClass)
+      : self.$img.addClass(noImageClass);
     if (self.settings.onAfterChange) {
       self.settings.onAfterChange.call(self, segment, src);
     }

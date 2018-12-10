@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Use Case: No Image in Mobile</title>
+  <link href="search/tipuesearch.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body class="page--no-mobile">
+<header>
+  <div class="pager">
+  <a href="README.html" class="prev README">&laquo;Smart Images</a>
+  <a href="index.html" class="index">Index</a>
+  <a href="resizer.html" class="next resizer">Using _resizer.sh_ to manipulate images&raquo;</a>
+</div>
+</header>
+
+
+  <h1>Use Case: No Image in Mobile</h1>
+  <div class="breadcrumb"><a href="index.html">Index</a></div>
+
+<section>
+
+<p>The first code block represents a normal use case for 2 breakpoints and three images:</p>
+
+<pre><code>&lt;div class="smart-image"&gt;
+  &lt;span data-si-srcset="small.jpg" data-si-media="max-width:480px"&gt;&lt;/span&gt;
+  &lt;span data-si-srcset="medium.jpg" data-si-media="max-width:767px"&gt;&lt;/span&gt;
+  &lt;span data-si-srcset="large.jpg" data-si-media="min-width:768px"&gt;&lt;/span&gt;
+  &lt;img/&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>But if we didn't want an image to appear when screen is &lt;= 480px, what to do?  Alter the markup as per the following:</p>
+
+<pre><code>&lt;div class="smart-image"&gt;
+  &lt;span data-si-srcset="medium.jpg" data-si-media="(min-width:481px) and (max-width:767px)"&gt;&lt;/span&gt;
+  &lt;span data-si-srcset="large.jpg" data-si-media="min-width:768px"&gt;&lt;/span&gt;
+  &lt;img/&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Note that a CSS class is added to the image when <code>src</code> is empty, <code>si-has-not-src</code>.  (The <code>si-</code> prefix is configurable via the plugin settings.) You may want to use this class to do something with the <code>&lt;img/&gt;</code> tag.  For example to hide the broken image icon in some browsers you should at least do this:</p>
+
+<pre><code>img.si-has-not-src {
+  display: none;
+}
+</code></pre>
+</section>
+
+<div class="search__results">
+  <div id="tipue_search_content"></div>
+</div>
+
+<footer>
+  <div class="pager">
+  <a href="README.html" class="prev README">&laquo;Smart Images</a>
+  <a href="index.html" class="index">Index</a>
+  <a href="resizer.html" class="next resizer">Using _resizer.sh_ to manipulate images&raquo;</a>
+</div>
+  
+  <div id="footer-legaleeze">
+    <p class="legaleeze center">Version: 0.2.4 &bull; Last Updated: Mon, 10 Dec 2018 12:54:50 -0800</p>
+  </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/core.js"></script>
+</body>
+</html>
+

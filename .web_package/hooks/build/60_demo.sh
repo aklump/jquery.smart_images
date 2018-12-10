@@ -3,6 +3,6 @@
 # @file
 # Copy relevent files from parent into demo
 #
-[[ -e demo/smart-images.js ]] && rm demo/smart-images.js
-cp dist/smart-images.js demo/
-cd demo && yarn
+[[ -e docs/smart-images.js ]] && rm docs/smart-images.js
+cp dist/smart-images.js docs/
+cd docs && yarn

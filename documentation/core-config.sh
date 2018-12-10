@@ -66,7 +66,7 @@ version_file = "../package.json"
 
 #
 # These paths are relative to the directory containing core-config.sh.
-website_dir = '../docs'
+website_dir = 'www'
 #html_dir = 'html'
 #mediawiki_dir = 'mediawiki'
 #text_dir = 'text'

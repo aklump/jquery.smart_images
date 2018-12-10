@@ -1,72 +1,84 @@
 <!DOCTYPE html>
-
 <html>
 <head>
-  <title>Use Case: No Image in Mobile</title>
-  <link href="search/tipuesearch.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <title>Demo of Smart Images</title>
+  <script src="node_modules/jquery/dist/jquery.slim.js"></script>
+  <script src="node_modules/@aklump/breakpointx/dist/BreakpointX.js"></script>
+  <script src="smart-images.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <style type="text/css">
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <script>
+    (function($) {
+      $('document').ready(function() {
+        var bpx = $('.smart-image')
+          .smartImages({
+            downsize: 'always',
+            resizeThrottle: 20,
+          })
+          .data('breakpointX')
+          .addCrossAction(function(segment) {
+            $('.js-segment-name span').html(segment.name);
+          })
+          .triggerActions();
+      });
+    })(jQuery);
+  </script>
 </head>
+<body>
+<div class="container-fluid">
+  <h1><!--$web_package_name--><!--/$web_package_name--> Demo
+    <small>Smart Images No Mobile Image</small>
+  </h1>
+  <p class="lead"><!--$web_package_description--><!--/$web_package_description--></p>
 
-<body class="page--no-mobile">
-<header>
-  <div class="pager">
-  <a href="README.html" class="prev README">&laquo;Smart Images</a>
-  <a href="index.html" class="index">Index</a>
-  <a href="resizer.html" class="next resizer">Using _resizer.sh_ to manipulate images&raquo;</a>
-</div>
-</header>
+  <p>
+    <a href="http://www.intheloftstudios.com/packages/jquery/jquery.smart_images" type="button" class="btn btn-primary"
+       data-web-package="homepage">Homepage</a>
+    <a href="https://github.com/aklump/jquery.smart_images" type="button"
+       class="btn btn-primary btn-success">Download</a>
+  </p>
 
+  <h2>Demo Instructions</h2>
+  <ol>
+    <li>Set your browser width less than 480 pixels and reload.</li>
+    <li>Observe there is no image.</li>
+    <li>Widen your window and observe the image loads.</li>
+    <li>Downsize window < 400px and the image disappears.</li>
+  </ol>
+  <hr/>
 
-  <h1>Use Case: No Image in Mobile</h1>
-  <div class="breadcrumb"><a href="index.html">Index</a></div>
+<pre>
+&lt;div class="always">
+  &lt;span data-si-srcset="images/large.jpg" data-si-media="(min-width:480px) and (max-width: 767px)">&lt;/span>
+  &lt;span data-si-srcset="images/jumbo.jpg" data-si-media="(min-width:768px)">&lt;/span>
+  &lt;img/>
+&lt;/div></pre>
 
-<section>
+  <h2>Example</h2>
+  <h3 class="js-segment-name">data-si-media: <span></span></h3>
+  <p>By omitting a span tag for the lesser widths, it means images won't load on mobile devices, thus saving bandwidth.  If your design warrants such a thing, this can be nice.</p>
 
-<p>The first code block represents a normal use case for 2 breakpoints and three images:</p>
-
-<pre><code>&lt;div class="smart-image"&gt;
-  &lt;span data-si-srcset="small.jpg" data-si-media="max-width:480px"&gt;&lt;/span&gt;
-  &lt;span data-si-srcset="medium.jpg" data-si-media="max-width:767px"&gt;&lt;/span&gt;
-  &lt;span data-si-srcset="large.jpg" data-si-media="min-width:768px"&gt;&lt;/span&gt;
-  &lt;img/&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>But if we didn't want an image to appear when screen is &lt;= 480px, what to do?  Alter the markup as per the following:</p>
-
-<pre><code>&lt;div class="smart-image"&gt;
-  &lt;span data-si-srcset="medium.jpg" data-si-media="(min-width:481px) and (max-width:767px)"&gt;&lt;/span&gt;
-  &lt;span data-si-srcset="large.jpg" data-si-media="min-width:768px"&gt;&lt;/span&gt;
-  &lt;img/&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>Note that a CSS class is added to the image when <code>src</code> is empty, <code>si-has-not-src</code>.  (The <code>si-</code> prefix is configurable via the plugin settings.) You may want to use this class to do something with the <code>&lt;img/&gt;</code> tag.  For example to hide the broken image icon in some browsers you should at least do this:</p>
-
-<pre><code>img.si-has-not-src {
-  display: none;
-}
-</code></pre>
-</section>
-
-<div class="search__results">
-  <div id="tipue_search_content"></div>
-</div>
-
-<footer>
-  <div class="pager">
-  <a href="README.html" class="prev README">&laquo;Smart Images</a>
-  <a href="index.html" class="index">Index</a>
-  <a href="resizer.html" class="next resizer">Using _resizer.sh_ to manipulate images&raquo;</a>
-</div>
-  
-  <div id="footer-legaleeze">
-    <p class="legaleeze center">Version: 0.2.4 &bull; Last Updated: Tue, 04 Dec 2018 18:23:05 -0800</p>
+  <div class="smart-image">
+    <span data-si-srcset="images/large.jpg" data-si-media="(min-width:480px) and (max-width: 767px)"></span>
+    <span data-si-srcset="images/jumbo.jpg" data-si-media="(min-width:768px)"></span>
+    <img/>
   </div>
-</footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="js/core.js"></script>
+  <hr/>
+  <p class="text-muted">
+    <strong>jquery.smart_images</strong> is brought to you by <a
+      href="http://www.intheloftstudios.com">In the Loft Studios</a></p>
+</div>
+
+<!-- Form me icon/link -->
+<a href="https://github.com/aklump/jquery.smart_images"><img style="position: absolute; top: 0; right: 0; border: 0;"
+                                                             src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+                                                             alt="Fork me on GitHub"></a>
 </body>
 </html>
-
