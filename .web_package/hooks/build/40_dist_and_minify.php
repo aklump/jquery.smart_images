@@ -12,4 +12,8 @@ $build
   ->replaceTokens()
   ->saveToDist()
   ->minifyFile('dist/smart-images.js')
+  ->addFilesToScm([
+    "dist/smart-images.js",
+    "dist/smart-images.min.js",
+  ])
   ->displayMessages();

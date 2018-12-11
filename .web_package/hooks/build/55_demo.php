@@ -14,4 +14,7 @@ $build
   ->loadFile('demo/no-mobile.html')
   ->replaceTokens()
   ->saveTo('docs')
+  ->addFilesToScm([
+    "docs/smart-images.js",
+  ])
   ->displayMessages();
