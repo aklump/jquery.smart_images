@@ -7,7 +7,7 @@
  * @license Dual licensed under the MIT or GPL Version 3 licenses.
  * http://www.intheloftstudios.com/packages/js/jquery.smart_images
  *
- * Date: Tue Dec 11 10:04:52 PST 2018
+ * Date: Tue Dec 11 10:22:23 PST 2018
  */
 /**
  * Instantiate this plugin thus:
