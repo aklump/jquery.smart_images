@@ -6,15 +6,6 @@
  * @{
  */
 
-// QUnit.test('Applying change to breakpoint without image adds class
-// has-not-src to img', function(assert) { var $el = $(markupSpanOrderIsDirty),
-// $img = $el.find('img'); $el.smartImages({ dataPrefix: '', dataSrcSuffix:
-// 'no-retina-src', srcSelector: 'span' });
-// console.log($el.data('breakpointX')); $img.removeClass('has-not-src');
-// assert.notOk($img.hasClass('has-not-src')); $el.smartImages('changeHandler',
-// { minWidth: 0, maxWidth: 767 }); assert.ok($img.hasClass('has-not-src'));
-// $el.smartImages('changeHandler', { minWidth: 960, maxWidth: 1079 });
-// assert.notOk($img.hasClass('has-not-src')); });
 
 QUnit.test('Assert BreakpointX and SmartImage objects attach to element and can be destroyed.', function(assert) {
   var $el = $(markupDefault);
@@ -26,12 +17,13 @@ QUnit.test('Assert BreakpointX and SmartImage objects attach to element and can 
   assert.notOk($el.data('breakpointX'));
 });
 
-QUnit.test('Test a no mobile sequence using "always" initial small', function(assert) {
+QUnit.test('Test a no mobile sequence using "always" initial small and classes are written, unwritten.', function(assert) {
   var $el = $(markupNoMobile),
     $img = $el.find('img'),
     small = 300,
     large = 500,
-    jumbo = 800;
+    jumbo = 800,
+    className ='si-has-not-src';
   var bpx = $el.smartImages({
     downsize: 'always',
     initialWidth: small,
@@ -41,27 +33,35 @@ QUnit.test('Test a no mobile sequence using "always" initial small', function(as
 
   bpx.onWindowResize(large);
   assert.strictEqual($img.attr('src'), 'images/large.jpg');
+  assert.notOk($el.hasClass(className));
 
   bpx.onWindowResize(jumbo);
   assert.strictEqual($img.attr('src'), 'images/jumbo.jpg');
+  assert.notOk($el.hasClass(className));
 
   bpx.onWindowResize(large);
   assert.strictEqual($img.attr('src'), 'images/large.jpg');
+  assert.notOk($el.hasClass(className));
 
   bpx.onWindowResize(small);
   assert.notOk($img.attr('src'));
+  assert.ok($el.hasClass(className));
 
   bpx.onWindowResize(large);
   assert.strictEqual($img.attr('src'), 'images/large.jpg');
+  assert.notOk($el.hasClass(className));
 
   bpx.onWindowResize(jumbo);
   assert.strictEqual($img.attr('src'), 'images/jumbo.jpg');
+  assert.notOk($el.hasClass(className));
 
   bpx.onWindowResize(small);
   assert.notOk($img.attr('src'));
+  assert.ok($el.hasClass(className));
 
   bpx.onWindowResize(large);
   assert.strictEqual($img.attr('src'), 'images/large.jpg');
+  assert.notOk($el.hasClass(className));
 });
 
 QUnit.test('Test a sequence using "loaded" initial small.', function(assert) {

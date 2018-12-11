@@ -184,8 +184,8 @@
       self.loaded.push(segment.imageWidth);
     }
     src
-      ? self.$img.removeClass(noImageClass)
-      : self.$img.addClass(noImageClass);
+      ? self.$el.removeClass(noImageClass)
+      : self.$el.addClass(noImageClass);
     if (self.settings.onAfterChange) {
       self.settings.onAfterChange.call(self, segment, src);
     }
