@@ -114,7 +114,7 @@
     self.srcMap = {};
     $imageSpans
 
-      // These serve as data only, and should not display.
+    // These serve as data only, and should not display.
       .hide()
 
       // Now we'll go through and setup our indexes based on queries.
@@ -131,8 +131,8 @@
 
     this.breakpointX.addCrossAction(function(segment, direction) {
       var largestWidthLoaded = self.loaded.length
-          ? Math.max.apply(Math, self.loaded)
-          : null,
+        ? Math.max.apply(Math, self.loaded)
+        : null,
         widthNeeded = segment.imageWidth,
         apply = largestWidthLoaded === null;
       if (
