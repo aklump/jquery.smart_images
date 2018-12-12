@@ -7,12 +7,15 @@
 
 namespace AKlump\WebPackage;
 
+$tokens = [
+  '../src/' => '',
+];
 $build
   ->loadFile('demo/index.html')
-  ->replaceTokens()
+  ->replaceTokens($tokens)
   ->saveTo('docs')
   ->loadFile('demo/no-mobile.html')
-  ->replaceTokens()
+  ->replaceTokens($tokens)
   ->saveTo('docs')
   ->addFilesToScm([
     "docs/jquery.smart-images.js",
