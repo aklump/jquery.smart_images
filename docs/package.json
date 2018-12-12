@@ -1,8 +1,5 @@
 {
-  "name": "demo",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "private": true,
   "dependencies": {
     "@aklump/breakpointx": ">=0.7.0",
     "bootstrap": "^4.1.3",

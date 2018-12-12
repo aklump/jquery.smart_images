@@ -8,12 +8,12 @@
 namespace AKlump\WebPackage;
 
 $build
-  ->loadFile('src/smart-images.js')
+  ->loadFile('src/jquery.smart-images.js')
   ->replaceTokens()
   ->saveToDist()
-  ->minifyFile('dist/smart-images.js')
+  ->minifyFile('dist/jquery.smart-images.js')
   ->addFilesToScm([
-    "dist/smart-images.js",
-    "dist/smart-images.min.js",
+    "dist/jquery.smart-images.js",
+    "dist/jquery.smart-images.min.js",
   ])
   ->displayMessages();

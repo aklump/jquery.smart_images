@@ -1,7 +1,7 @@
 {
     "name": "@aklump/smart-images",
     "title": "Smart Images",
-    "description": "Window width-based image loading for responsive applications.",
+    "description": "Window width based image loading for responsive applications.",
     "version": "0.3.2",
     "main": "./dist/jquery.smart-images",
     "license": "BSD-3-Clause",
