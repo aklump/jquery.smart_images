@@ -1,3 +1,7 @@
+# 0.4.0
+
+* Changed name back to jquery.smart-images.js to be standards compliant.
+
 # 0.3.0
 
 * onBeforeChange now receives a segment object as the first argument.
