@@ -1,9 +1,1 @@
-/.idea
-/.web_package
-/documentation
-/yarn.lock
-.gitkeep
-node_modules
-/demo
-*.log
-/resources
+docs/node_modules

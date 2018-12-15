@@ -1,12 +1,12 @@
-# Smart Images
+# __title
 
-![Smart Images](images/smart-images.jpg)
+![__title](images/smart-images.jpg)
 
 ## Summary
 
-Window width based image loading for responsive applications.
+__description
 
-**Visit <https://aklump.github.io/jquery.smart_images/> for full documentation.**
+**Visit <__homepage> for full documentation.**
 
 ## Quick Start
 
