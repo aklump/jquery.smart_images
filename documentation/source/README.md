@@ -6,7 +6,7 @@
 
 __description
 
-**Visit <__homepage> for full documentation.**
+**Visit <https://aklump.github.io/jquery.smart_images> for full demo.**
 
 ## Quick Start
 
