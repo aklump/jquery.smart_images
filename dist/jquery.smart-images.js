@@ -1,5 +1,5 @@
 /**
- * Smart Images jQuery Plugin v0.4.1
+ * Smart Images jQuery Plugin v0.4.2
  * http://www.intheloftstudios.com/packages/js/jquery.smart_images
  *
  * Window width based image loading for responsive applications.
@@ -7,7 +7,7 @@
  * Copyright 2017-2018,
  * @license BSD-3-Clause
  *
- * Date: Fri Dec 14 17:06:09 PST 2018
+ * Date: Fri Dec 14 17:09:38 PST 2018
  */
 /**
  * Instantiate this plugin thus:
@@ -313,6 +313,6 @@
    * @return {string}
    */
   $.fn.smartImages.version = function() {
-    return '0.4.1';
+    return '0.4.2';
   };
 });
