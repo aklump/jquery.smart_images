@@ -1,11 +1,11 @@
 /**
- * __title jQuery JavaScript Plugin v__version
+ * __title jQuery Plugin v__version
+ * __homepage
  *
  * __description
  *
- * Copyright 2017__year, __author
- * @license Dual licensed under the MIT or GPL Version 3 licenses.
- * __url
+ * Copyright 2017-__year,
+ * @license BSD-3-Clause
  *
  * Date: __date
  */
