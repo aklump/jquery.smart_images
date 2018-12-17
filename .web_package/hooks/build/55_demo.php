@@ -18,6 +18,6 @@ $build
   ->replaceTokens($tokens)
   ->saveTo('docs')
   ->addFilesToScm([
-    "docs/jquery.smart-images.js",
+    "docs",
   ])
   ->displayMessages();
