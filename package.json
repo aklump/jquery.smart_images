@@ -2,7 +2,7 @@
     "name": "@aklump\/smart-images",
     "title": "Smart Images",
     "description": "Window width based image loading for responsive applications.",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "main": ".\/dist\/jquery.smart-images",
     "license": "BSD-3-Clause",
     "keywords": [
@@ -33,7 +33,7 @@
         "qunit": "^2.8.0"
     },
     "dependencies": {
-        "@aklump\/breakpointx": ">=0.7.1",
+        "@aklump\/breakpointx": ">=0.7.2",
         "jquery": ">=1.12"
     },
     "bugs": {
