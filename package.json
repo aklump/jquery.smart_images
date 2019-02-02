@@ -33,7 +33,7 @@
         "qunit": "^2.8.0"
     },
     "dependencies": {
-        "@aklump\/breakpointx": ">=0.7.2",
+        "@aklump\/breakpointx": ">=0.7.3",
         "jquery": ">=1.12"
     },
     "bugs": {
